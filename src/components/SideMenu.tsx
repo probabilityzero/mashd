@@ -78,18 +78,18 @@ export const SideMenu: React.FC<SideMenuProps> = ({ onCreateNew, onCloseMenu }) 
           </button>
 
 
-          <div className="space-y-1 flex-grow overflow-y-auto">
+          <div className="flex-grow overflow-y-auto">
             {knots.map((knot, index) => (
               <div
                 key={knot.id}
                 ref={(el) => (knotItemRef.current[index] = el as HTMLElement)}
-                className={`relative group p-3 py-2 rounded-lg transition-colors ${
+                className={`relative group p-3 py-1.5 rounded-lg transition-colors ${
                   selectedKnot === knot.id
                     ? isDark
                       ? 'bg-gray-700'
                       : 'bg-blue-100'
                     : isDark
-                    ? 'hover:bg-gray-700'
+                    ? 'hover:bg-gray-600'
                     : 'hover:bg-gray-100'
                 }`}
               >
@@ -97,7 +97,7 @@ export const SideMenu: React.FC<SideMenuProps> = ({ onCreateNew, onCloseMenu }) 
                   onClick={() => selectKnot(knot.id)}
                   className="w-full text-left"
                 >
-                  <h3 className={`font-medium ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                  <h3 className={`font-normal ${isDark ? 'text-white' : 'text-gray-900'}`}>
                     {knot.name}
                   </h3>
                 </button>
