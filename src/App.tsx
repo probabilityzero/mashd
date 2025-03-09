@@ -114,7 +114,7 @@ function App() {
                         <button
                           key={tab}
                           onClick={() => setActiveTab(tab)}
-                          className={`px-3 py-1.5 capitalize text-sm rounded-full transition-colors ${ // Rounded-full for pill shape
+                          className={`px-3 py-1 capitalize gap-1 text-sm rounded-full transition-colors ${ // Rounded-full for pill shape
                             activeTab === tab
                               ? isDark
                                 ? 'bg-gray-700 text-white'
@@ -160,12 +160,12 @@ function App() {
           </div>
         ) : (
           <div className="space-y-8">
-            <div className={`${isDark ? 'bg-gray-800' : 'bg-white'} rounded-lg shadow-md p-8 text-center`} style={{ height: '350px', marginTop: '12rem', md: { paddingTop: '2rem', paddingBottom: '2rem' } }}>
+            <div className={`${isDark ? 'bg-gray-800' : 'bg-white'} flex items-center rounded-lg shadow-md p-8 text-center`} style={{ height: '350px', marginTop: '12rem', md: { marginTop: '2rem' } }}>
               <h2 className={`text-3xl font-bold mb-4 ${isDark ? 'text-white' : 'text-gray-900'}`}>
                 Create Your Mathematical Visualization
               </h2>
               <p className={`text-lg mb-6 ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
-                Bring mathematical concepts to life with interactive 3D visualizations
+                Bring mathematics to life with interactive 3D visualizations
               </p>
               <button
                 onClick={handleCreateNew}
