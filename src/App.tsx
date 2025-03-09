@@ -122,7 +122,7 @@ function App() {
                               : isDark
                               ? 'text-gray-300 hover:bg-gray-700'
                               : 'text-gray-700 hover:bg-gray-100'
-                          } ${tab === 'input' ? 'rounded-r-none' : ''}`} //remove right radius for input tab
+                          }`}
                         >
                           {tab === 'input' ? 'Input' : tab}
                         </button>

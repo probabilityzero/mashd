@@ -63,7 +63,7 @@ export const SideMenu: React.FC<SideMenuProps> = ({ onCreateNew, onCloseMenu }) 
         } z-50 flex flex-col`}
       >
         <div className="p-3 flex flex-col h-full">
-          <div className="flex justify-between items-center mb-4">
+          <div className="flex justify-between items-center ml-2 mb-4">
             <h2 className={`text-xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
               Library
             </h2>
@@ -83,7 +83,7 @@ export const SideMenu: React.FC<SideMenuProps> = ({ onCreateNew, onCloseMenu }) 
               <div
                 key={knot.id}
                 ref={(el) => (knotItemRef.current[index] = el as HTMLElement)}
-                className={`relative group p-3 px-2 rounded-lg transition-colors ${
+                className={`relative group p-3 py-2 rounded-lg transition-colors ${
                   selectedKnot === knot.id
                     ? isDark
                       ? 'bg-gray-700'
@@ -102,7 +102,7 @@ export const SideMenu: React.FC<SideMenuProps> = ({ onCreateNew, onCloseMenu }) 
                   </h3>
                 </button>
 
-                <div className="absolute top-2 right-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                <div className="absolute items-center right-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                   <button
                     onClick={() => handlePopoverToggle(knot.id)}
                     className={`p-1 ${
