@@ -102,12 +102,12 @@ export const SideMenu: React.FC<SideMenuProps> = ({ onCreateNew, onCloseMenu }) 
                   </h3>
                 </button>
 
-                <div className="absolute top-1 right-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                <div className="absolute top-2 right-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                   <button
                     onClick={() => handlePopoverToggle(knot.id)}
                     className={`p-1 ${
                       isDark ? 'hover:bg-gray-600' : 'hover:bg-gray-200'
-                    } rounded`}
+                    } rounded-full`}
                   >
                     <MoreVertical size={16} />
                   </button>
