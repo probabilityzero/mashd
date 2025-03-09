@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { KnotDefinition } from '../types/knot';
-import { Download, Edit, Trash2 } from 'lucide-react';
 
 interface KnotVisualizerProps {
   code: string;
@@ -13,7 +12,7 @@ interface KnotVisualizerProps {
   setShowEditModal: (show: boolean) => void;
 }
 
-export const KnotVisualizer: React.FC<KnotVisualizerProps> = ({ code, isDark, editingKnot, onDeleteKnot, onDownloadKnot, setShowEditModal }) => {
+export const Visualisation: React.FC<KnotVisualizerProps> = ({ code, isDark, editingKnot, onDeleteKnot, onDownloadKnot, setShowEditModal }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const sceneRef = useRef<THREE.Scene | null>(null);
   const cameraRef = useRef<THREE.PerspectiveCamera | null>(null);
@@ -139,9 +138,6 @@ export const KnotVisualizer: React.FC<KnotVisualizerProps> = ({ code, isDark, ed
   return (
     <div className="w-full h-full relative">
       <div ref={containerRef} className="w-full h-full" />
-      <div className="absolute bottom-0 left-0 w-full flex justify-center p-4">
-        Info
-      </div>
     </div>
   );
 };

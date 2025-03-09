@@ -62,10 +62,10 @@ export const SideMenu: React.FC<SideMenuProps> = ({ onCreateNew, onCloseMenu }) 
           isMenuOpen ? 'translate-x-0' : '-translate-x-full'
         } z-50 flex flex-col`}
       >
-        <div className="p-4 flex flex-col h-full">
+        <div className="p-3 flex flex-col h-full">
           <div className="flex justify-between items-center mb-4">
             <h2 className={`text-xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
-              Visualization Library
+              Library
             </h2>
           </div>
 
@@ -74,16 +74,16 @@ export const SideMenu: React.FC<SideMenuProps> = ({ onCreateNew, onCloseMenu }) 
             className="flex items-center justify-center gap-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors mb-6"
           >
             <Plus size={20} />
-            <span>New Canvas</span>
+            <span>Create New</span>
           </button>
 
 
-          <div className="space-y-2 flex-grow overflow-y-auto">
+          <div className="space-y-1 flex-grow overflow-y-auto">
             {knots.map((knot, index) => (
               <div
                 key={knot.id}
                 ref={(el) => (knotItemRef.current[index] = el as HTMLElement)}
-                className={`relative group p-3 rounded-lg transition-colors ${
+                className={`relative group p-3 px-2 rounded-lg transition-colors ${
                   selectedKnot === knot.id
                     ? isDark
                       ? 'bg-gray-700'
@@ -114,13 +114,8 @@ export const SideMenu: React.FC<SideMenuProps> = ({ onCreateNew, onCloseMenu }) 
                 </div>
 
                 {popoverKnotId === knot.id && (
-                  <div ref={popoverRef} className={`absolute right-0 top-full mt-2 w-56 rounded-md shadow-lg ${isDark ? 'bg-gray-700' : 'bg-white'} ring-1 ring-black ring-opacity-5 focus:outline-none z-10`}>
+                  <div ref={popoverRef} className={`absolute left-0 top-full mt-2 w-56 rounded-md shadow-lg ${isDark ? 'bg-gray-700' : 'bg-white text-gray-800'} ring-1 ring-black ring-opacity-5 focus:outline-none z-10`}>
                     <div className="py-2" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-                      <div className="px-4 py-2 text-sm ${isDark ? 'text-gray-300' : 'text-gray-700'}">
-                        <div className="font-bold ${isDark ? 'text-white' : 'text-gray-900'}">{knot.name}</div>
-                        <div className="text-gray-500 dark:text-gray-400">{knot.description}</div>
-                      </div>
-                      <hr className="border-gray-200 dark:border-gray-600 my-2"/>
                       <button
                         onClick={() => { setEditingKnot(knot); closePopover(); }}
                         className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 w-full text-left"
@@ -160,7 +155,6 @@ export const SideMenu: React.FC<SideMenuProps> = ({ onCreateNew, onCloseMenu }) 
             } rounded-full transition-colors flex items-center justify-center gap-2`}
           >
             {isDark ? <Sun size={20} /> : <Moon size={20} />}
-            <span>{isDark ? 'Light' : 'Dark'}</span>
           </button>
         </div>
       </div>

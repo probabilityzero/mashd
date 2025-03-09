@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { KnotVisualizer } from './components/KnotVisualizer';
+import { Visualisation } from './components/Visualisation';
 import { CodeEditor } from './components/CodeEditor';
 import { SideMenu } from './components/SideMenu';
 import { EditModal } from './components/EditModal';
@@ -12,7 +12,7 @@ function App() {
   const { knots, selectedKnot, isMenuOpen, toggleMenu, addKnot, updateKnot, deleteKnot, selectedKnotData, selectKnot } = useKnotStore();
   const { isDark, toggleTheme } = useTheme();
   const [showEditModal, setShowEditModal] = useState(false);
-  const [activeTab, setActiveTab] = useState<'input' | 'code' | 'latex' | 'mathjax'>('input'); // Default to 'input' - changed default tab
+  const [activeTab, setActiveTab] = useState<'input' | 'code' | 'latex' | 'mathjax'>('code'); // Default to 'code' - changed default tab
   const currentKnot = knots.find(k => k.id === selectedKnot);
   const [editingKnot, setEditingKnot] = useState<KnotDefinition | undefined>(selectedKnotData);
 
@@ -78,7 +78,7 @@ function App() {
             >
               {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
-            <h1 className="text-2xl font-bold text-center flex-1">Mash D</h1> {/* Centered App Name "Mash D" */}
+            <h1 className="text-2xl font-semibold text-center flex-1">Mash D</h1> {/* Centered App Name "Mash D" */}
           </div>
           {currentKnot && (
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"> {/* Centering the knot name */}
@@ -101,11 +101,11 @@ function App() {
       <main className="max-w-7xl mx-auto px-4 py-6">
         {currentKnot ? (
           <div className="space-y-6">
-            <div className={`${isDark ? 'bg-gray-800' : 'bg-white'} rounded-lg shadow-md overflow-hidden`} style={{ height: '500px' }}>
-              <KnotVisualizer code={currentKnot.code} isDark={isDark} editingKnot={editingKnot} onDeleteKnot={handleDeleteKnot} onDownloadKnot={handleDownload} setShowEditModal={setShowEditModal} />
+            <div className={`${isDark ? 'bg-gray-800' : 'bg-white'} rounded-lg shadow-md overflow-hidden`} style={{ height: '550px' }}>
+              <Visualisation code={currentKnot.code} isDark={isDark} editingKnot={editingKnot} onDeleteKnot={handleDeleteKnot} onDownloadKnot={handleDownload} setShowEditModal={setShowEditModal} />
             </div>
 
-            <div className="flex">
+            <div className="flex p-1">
               <div className="flex flex-col w-full"> {/* Ensure column takes full width */}
                 <div className={`${isDark ? 'bg-gray-800' : 'bg-white'} rounded-lg shadow-md overflow-hidden mt-2`}> {/* Border and margin container */}
                   <div className="flex justify-between items-center border-b border-gray-300 dark:border-gray-700"> {/* Border for the nav area */}
@@ -114,7 +114,7 @@ function App() {
                         <button
                           key={tab}
                           onClick={() => setActiveTab(tab)}
-                          className={`px-4 py-2 capitalize text-sm rounded-full transition-colors ${ // Rounded-full for pill shape
+                          className={`px-3 py-1.5 capitalize text-sm rounded-full transition-colors ${ // Rounded-full for pill shape
                             activeTab === tab
                               ? isDark
                                 ? 'bg-gray-700 text-white'
@@ -124,7 +124,7 @@ function App() {
                               : 'text-gray-700 hover:bg-gray-100'
                           } ${tab === 'input' ? 'rounded-r-none' : ''}`} //remove right radius for input tab
                         >
-                          {tab === 'input' ? 'Input (Soon)' : tab} {/* "Input (Soon)" text */}
+                          {tab === 'input' ? 'Input' : tab}
                         </button>
                       ))}
                     </div>

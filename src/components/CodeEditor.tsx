@@ -15,7 +15,7 @@ export const CodeEditor: React.FC<CodeEditorProps> = ({ code, onChange }) => {
       theme="dark"
       extensions={[javascript()]}
       onChange={(value) => onChange(value)}
-      className="overflow-hidden rounded-md"
+      className="overflow-hidden rounded-b-md"
     />
   );
 };
