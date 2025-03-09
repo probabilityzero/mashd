@@ -98,10 +98,10 @@ function App() {
       {isMenuOpen && <div className="fixed inset-0 bg-black bg-opacity-50 z-40" onClick={handleClickOutside} />}
       <SideMenu onCreateNew={handleCreateNew} />
 
-      <main className="max-w-7xl mx-auto px-4 py-6">
+      <main className="max-w-7xl mx-auto p-4">
         {currentKnot ? (
           <div className="space-y-6">
-            <div className={`${isDark ? 'bg-gray-800' : 'bg-white'} rounded-lg shadow-md overflow-hidden`} style={{ height: '550px' }}>
+            <div className={`${isDark ? 'bg-gray-800' : 'bg-white'} rounded-lg shadow-md overflow-hidden`} style={{ height: '600px' }}>
               <Visualisation code={currentKnot.code} isDark={isDark} editingKnot={editingKnot} onDeleteKnot={handleDeleteKnot} onDownloadKnot={handleDownload} setShowEditModal={setShowEditModal} />
             </div>
 
@@ -160,7 +160,7 @@ function App() {
           </div>
         ) : (
           <div className="space-y-8">
-            <div className={`${isDark ? 'bg-gray-800' : 'bg-white'} rounded-lg shadow-md p-8 text-center`} style={{ height: '350px', paddingTop: '9rem', paddingBottom: '3rem', sm: { paddingTop: '6rem', paddingBottom: '2rem' } }}>
+            <div className={`${isDark ? 'bg-gray-800' : 'bg-white'} rounded-lg shadow-md p-8 text-center`} style={{ height: '350px', marginTop: '12rem', md: { paddingTop: '2rem', paddingBottom: '2rem' } }}>
               <h2 className={`text-3xl font-bold mb-4 ${isDark ? 'text-white' : 'text-gray-900'}`}>
                 Create Your Mathematical Visualization
               </h2>
