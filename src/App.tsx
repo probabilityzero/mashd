@@ -108,7 +108,7 @@ function App() {
             <div className="flex">
               <div className="flex flex-col w-full"> {/* Ensure column takes full width */}
                 <div className={`${isDark ? 'bg-gray-800' : 'bg-white'} rounded-lg shadow-md overflow-hidden mt-2`}> {/* Border and margin container */}
-                  <div className="flex pp-1 justify-between items-center border-b border-gray-300 dark:border-gray-700"> {/* Border for the nav area */}
+                  <div className="flex p-1 justify-between items-center border-b border-gray-300 dark:border-gray-700"> {/* Border for the nav area */}
                     <div className="flex"> {/* Container for tabs to keep them left-aligned */}
                       {(['input', 'code', 'latex', 'mathjax'] as const).map((tab) => (
                         <button
