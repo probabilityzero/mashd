@@ -13,9 +13,9 @@ export const WelcomeModal: React.FC<WelcomeModalProps> = ({ onClose }) => {
     const newKnot = {
       id: `knot-${Date.now()}`,
       name: 'New Knot',
-      description: 'Custom knot definition',
+      description: 'Custom definition',
       lastModified: Date.now(),
-      code: `function generateKnotPoints(t) {
+      code: `function generatePoints(t) {
   const x = Math.sin(t);
   const y = Math.cos(t);
   const z = Math.sin(2 * t);

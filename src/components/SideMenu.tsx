@@ -102,7 +102,7 @@ export const SideMenu: React.FC<SideMenuProps> = ({ onCreateNew, onCloseMenu }) 
                   </h3>
                 </button>
 
-                <div className="absolute items-center right-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                <div className="absolute top-1 right-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                   <button
                     onClick={() => handlePopoverToggle(knot.id)}
                     className={`p-1 ${

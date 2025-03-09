@@ -11,7 +11,7 @@ export const KnotSelector: React.FC = () => {
       id: `knot-${Date.now()}`,
       name: 'New Knot',
       description: 'Custom knot definition',
-      code: `function generateKnotPoints(t) {
+      code: `function generatePoints(t) {
   const x = Math.sin(t);
   const y = Math.cos(t);
   const z = Math.sin(2 * t);

@@ -26,7 +26,7 @@ const defaultKnots: KnotDefinition[] = [
     name: 'Trefoil Knot',
     description: 'The simplest non-trivial knot',
     lastModified: Date.now(),
-    code: `function generateKnotPoints(t) {
+    code: `function generatePoints(t) {
   const x = Math.sin(t) + 2 * Math.sin(2 * t);
   const y = Math.cos(t) - 2 * Math.cos(2 * t);
   const z = -Math.sin(3 * t);
@@ -38,7 +38,7 @@ const defaultKnots: KnotDefinition[] = [
     name: 'Figure-Eight Knot',
     description: 'A knot with crossing number 4',
     lastModified: Date.now(),
-    code: `function generateKnotPoints(t) {
+    code: `function generatePoints(t) {
   const x = (2 + Math.cos(2 * t)) * Math.cos(3 * t);
   const y = (2 + Math.cos(2 * t)) * Math.sin(3 * t);
   const z = Math.sin(4 * t);
