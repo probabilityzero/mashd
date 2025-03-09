@@ -160,7 +160,7 @@ function App() {
           </div>
         ) : (
           <div className="space-y-8">
-            <div className={`${isDark ? 'bg-gray-800' : 'bg-white'} rounded-lg shadow-md p-8 text-center`}>
+            <div className={`${isDark ? 'bg-gray-800' : 'bg-white'} rounded-lg shadow-md p-8 text-center`} style={{ height: '350px', paddingTop: '9rem', paddingBottom: '3rem', sm: { paddingTop: '6rem', paddingBottom: '2rem' } }}>
               <h2 className={`text-3xl font-bold mb-4 ${isDark ? 'text-white' : 'text-gray-900'}`}>
                 Create Your Mathematical Visualization
               </h2>
