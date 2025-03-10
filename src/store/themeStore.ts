@@ -1,17 +1,13 @@
 import { create } from 'zustand';
-import Cookies from 'js-cookie';
 
-interface ThemeState {
+type ThemeStore = {
   isDark: boolean;
   toggleTheme: () => void;
-}
+  setThemeBasedOnSystem: (isDarkMode: boolean) => void;
+};
 
-export const useTheme = create<ThemeState>((set) => ({
-  isDark: Cookies.get('theme') === 'dark',
-  toggleTheme: () =>
-    set((state) => {
-      const newTheme = !state.isDark;
-      Cookies.set('theme', newTheme ? 'dark' : 'light');
-      return { isDark: newTheme };
-    }),
+export const useTheme = create<ThemeStore>((set) => ({
+  isDark: false,
+  toggleTheme: () => set((state) => ({ isDark: !state.isDark })),
+  setThemeBasedOnSystem: (isDarkMode: boolean) => set({ isDark: isDarkMode })
 }));
