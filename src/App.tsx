@@ -69,15 +69,15 @@ function App() {
   const formatRelativeTime = (timestamp: number) => {
     const now = Date.now();
     const diff = now - timestamp;
-
+    
     // Less than 24 hours
     if (diff < 24 * 60 * 60 * 1000) {
       return "Today";
-    }
+    } 
     // Less than 48 hours
     else if (diff < 48 * 60 * 60 * 1000) {
       return "Yesterday";
-    }
+    } 
     // Otherwise show days ago
     else {
       const days = Math.floor(diff / (24 * 60 * 60 * 1000));
@@ -149,28 +149,29 @@ function App() {
 
             <div className="flex">
               <div className="flex flex-col w-full">
-                <div className={`${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} rounded-lg shadow-lg overflow-hidden mt-2 border`}>
-                  <div className="flex p-1.5 justify-between items-center border-b border-gray-200 dark:border-gray-700 bg-gradient-to-r 
+              <div className={`${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} rounded-lg shadow-lg overflow-hidden mt-2 border`}>
+  <div className="flex p-1.5 justify-between items-center border-b border-gray-200 dark:border-gray-700 bg-gradient-to-r 
     ${isDark ? 'from-gray-800 to-gray-700' : 'from-blue-300 to-blue-500'}">
-                    <div className="flex space-x-1">
-                      {(['input', 'code', 'latex', 'mathjax'] as const).map((tab) => (
-                        <button
-                          key={tab}
-                          onClick={() => setActiveTab(tab)}
-                          className={`px-3 py-1 capitalize text-sm font-medium rounded-full transition-colors ${activeTab === tab
-                              ? isDark
-                                ? 'bg-blue-600 text-white'
-                                : 'bg-blue-700 text-white'
-                              : isDark
-                                ? 'text-gray-300 hover:bg-gray-700 hover:text-white'
-                                : 'text-blue-900 hover:bg-blue-200 hover:text-blue-900'
-                            }`}
-                        >
-                          {tab === 'input' ? 'Input' : tab}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
+    <div className="flex space-x-1">
+      {(['input', 'code', 'latex', 'mathjax'] as const).map((tab) => (
+        <button
+          key={tab}
+          onClick={() => setActiveTab(tab)}
+          className={`px-3 py-1 capitalize text-sm font-medium rounded-full transition-colors ${
+            activeTab === tab
+              ? isDark
+                ? 'bg-blue-600 text-white'
+                : 'bg-blue-700 text-white'
+              : isDark
+              ? 'text-gray-300 hover:bg-gray-700 hover:text-white'
+              : 'text-blue-900 hover:bg-blue-200 hover:text-blue-900'
+          }`}
+        >
+          {tab === 'input' ? 'Input' : tab}
+        </button>
+      ))}
+    </div>
+</div>
 
                   <div className="overflow-hidden">
                     {activeTab === 'input' && (
@@ -202,11 +203,13 @@ function App() {
           </div>
         ) : (
           <div className="space-y-10 max-w-6xl mx-auto">
-            <div
-              className={`${isDark ? 'bg-gradient-to-br from-gray-800 to-gray-900' : 'bg-gradient-to-br from-white to-blue-50'
-                } rounded-xl shadow-xl p-8 py-14 text-center border ${isDark ? 'border-gray-700' : 'border-blue-100'
-                }`}
-              style={{
+            <div 
+              className={`${
+                isDark ? 'bg-gradient-to-br from-gray-800 to-gray-900' : 'bg-gradient-to-br from-white to-blue-50'
+              } rounded-xl shadow-xl p-8 py-14 text-center border ${
+                isDark ? 'border-gray-700' : 'border-blue-100'
+              }`} 
+              style={{ 
                 marginTop: '2rem',
                 minHeight: '320px',
                 display: 'flex',
@@ -217,8 +220,9 @@ function App() {
             >
               <div className="max-w-3xl mx-auto">
                 <div className="mb-2.5">
-                  <span className={`inline-block px-3 py-1 text-sm rounded-full ${isDark ? 'bg-blue-900 text-blue-200' : 'bg-blue-100 text-blue-800'
-                    }`}>
+                  <span className={`inline-block px-3 py-1 text-sm rounded-full ${
+                    isDark ? 'bg-blue-900 text-blue-200' : 'bg-blue-100 text-blue-800'
+                  }`}>
                     Mathematical Visualization Tool
                   </span>
                 </div>
@@ -237,40 +241,42 @@ function App() {
                 </button>
               </div>
             </div>
-            <div
-              key={knot.id}
-              className={`${isDark
-                  ? 'bg-gray-900 hover:bg-gray-800 border-gray-700'
-                  : 'bg-white hover:bg-blue-50 border-gray-200'
-                } rounded-xl shadow-md transition-all duration-200 overflow-hidden border hover:shadow-lg hover:scale-105 group cursor-pointer`}
-              onClick={() => selectKnot(knot.id)}
-            >
-              {/* Real Visualization Instead of Thumbnail */}
-              <div className="h-36 w-full overflow-hidden relative pointer-events-none">
-                {renderVisualization(knot.code)}
-              </div>
-
-              {/* Text container wrapped in a counter-scaling div */}
-              <div className="relative" style={{ transformOrigin: 'top left' }}>
-                <div className="p-3 py-2 transition-transform duration-200 group-hover:[transform:scale(0.95238)]">
-                  <h3
-                    className={`text-xl font-medium mb-1 transition-colors ${isDark ? 'text-white' : 'text-gray-800'
-                      }`}
-                    style={{ fontFamily: 'serif' }}
-                  >
-                    {knot.name}
-                  </h3>
-                  <p className={`${isDark ? 'text-gray-300' : 'text-gray-600'} text-sm`}>
-                    {knot.description}
-                  </p>
-                  <div className="flex justify-end items-center">
-                    <span className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
-                      {formatRelativeTime(knot.lastModified)}
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
+<div
+  key={knot.id}
+  className={`${
+    isDark
+      ? 'bg-gray-900 hover:bg-gray-800 border-gray-700'
+      : 'bg-white hover:bg-blue-50 border-gray-200'
+  } rounded-xl shadow-md transition-all duration-200 overflow-hidden border hover:shadow-lg hover:scale-105 group cursor-pointer`}
+  onClick={() => selectKnot(knot.id)}
+>
+  {/* Real Visualization Instead of Thumbnail */}
+  <div className="h-36 w-full overflow-hidden relative pointer-events-none">
+    {renderVisualization(knot.code)}
+  </div>
+  
+  {/* Text container wrapped in a counter-scaling div */}
+  <div className="relative" style={{ transformOrigin: 'top left' }}>
+    <div className="p-3 py-2 transition-transform duration-200 group-hover:[transform:scale(0.95238)]">
+      <h3
+        className={`text-xl font-medium mb-1 transition-colors ${
+          isDark ? 'text-white' : 'text-gray-800'
+        }`}
+        style={{ fontFamily: 'serif' }}
+      >
+        {knot.name}
+      </h3>
+      <p className={`${isDark ? 'text-gray-300' : 'text-gray-600'} text-sm`}>
+        {knot.description}
+      </p>
+      <div className="flex justify-end items-center">
+        <span className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+          {formatRelativeTime(knot.lastModified)}
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
 
           </div>
         )}
