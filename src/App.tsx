@@ -175,7 +175,7 @@ function App() {
             </button>
             <button
               onClick={handleCreateNew}
-              className="flex items-center py-1 px-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-full hover:from-blue-700 hover:to-indigo-700 transition-all shadow-md hover:shadow-lg text-base font-medium"
+              className="flex items-center p-1 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-full hover:from-blue-700 hover:to-indigo-700 transition-all shadow-md hover:shadow-lg text-base font-medium"
             >
               <PlusCircle size={18} className="mr-1" />
               {/* <span>New</span> */}
@@ -279,7 +279,7 @@ function App() {
       </span>
     </div>
     <h2 className={`text-4xl font-bold mb-4 ${isDark ? 'text-white' : 'text-gray-900'}`}>
-      Mash<span className="font-serif">(d)</span> for Mathematical Visualization
+      Mash<span className="font-serif italic">(d)</span> for Mathematical Visualization
     </h2>
     <p className={`text-xl mb-8 ${isDark ? 'text-gray-300' : 'text-gray-600'} max-w-2xl mx-auto`}>
       Bring algebra, geometry and topology to life with interactive multi-dimension visualizations that help you explore complex concepts in a visual way.
@@ -307,7 +307,7 @@ function App() {
                       key={knot.id}
                       className={`${
                         isDark
-                          ? 'bg-gray-900 hover:bg-gray-800 border-gray-700'
+                          ? 'bg-gray-900 hover:bg-gray-900 border-gray-700'
                           : 'bg-white hover:bg-blue-50 border-gray-200'
                       } rounded-xl shadow-md transition-all duration-200 overflow-hidden border hover:shadow-lg group cursor-pointer relative`}
                       onClick={() => selectKnot(knot.id)}

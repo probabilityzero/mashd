@@ -16,7 +16,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        'serif': ['Cormorant Garamond', 'Playfair Display', 'Georgia', 'serif'],
+        'serif': ['Georgia', 'Cormorant Garamond', 'Playfair Display', 'serif'],
       },
     },
   },
