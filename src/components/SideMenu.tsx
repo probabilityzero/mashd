@@ -71,7 +71,11 @@ export const SideMenu: React.FC<SideMenuProps> = ({ onCreateNew, onCloseMenu }) 
 
           <button
             onClick={onCreateNew}
-            className="flex items-center justify-center gap-2 px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors mb-6"
+            className={`flex items-center justify-center gap-2 px-4 py-2 rounded-lg transition-colors mb-6 ${
+              isDark 
+                ? 'bg-blue-600 hover:bg-blue-700 text-white' 
+                : 'bg-blue-500 hover:bg-blue-600 text-white'
+            }`}
           >
             <Plus size={20} />
             <span>Create New</span>
@@ -89,7 +93,7 @@ export const SideMenu: React.FC<SideMenuProps> = ({ onCreateNew, onCloseMenu }) 
                       ? 'bg-gray-700'
                       : 'bg-gray-200'
                     : isDark
-                    ? 'hover:bg-gray-600'
+                    ? 'hover:bg-gray-700'
                     : 'hover:bg-gray-100'
                 }`}
               >
@@ -105,18 +109,27 @@ export const SideMenu: React.FC<SideMenuProps> = ({ onCreateNew, onCloseMenu }) 
                 <div className="absolute top-1.5 right-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                   <button
                     onClick={() => handlePopoverToggle(knot.id)}
-                    className={`p-1 hover:text-xl rounded-md`}
+                    className={`p-1 rounded-md ${isDark ? 'hover:bg-gray-600' : 'hover:bg-gray-200'}`}
                   >
                     <MoreVertical size={16} />
                   </button>
                 </div>
 
                 {popoverKnotId === knot.id && (
-                  <div ref={popoverRef} className={`absolute border right-0 top-full w-48 rounded-md shadow-lg ${isDark ? 'bg-gray-700 hover:bg-gray-400' : 'bg-white hover:bg-gray-100'} focus:outline-none z-10`}>
+                  <div 
+                    ref={popoverRef} 
+                    className={`absolute border ${isDark ? 'border-gray-600' : 'border-gray-200'} right-0 top-full w-48 rounded-md shadow-lg ${
+                      isDark ? 'bg-gray-700' : 'bg-white'
+                    } focus:outline-none z-10`}
+                  >
                     <div className="" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
                       <button
                         onClick={() => { setEditingKnot(knot); closePopover(); }}
-                        className="flex items-center gap-2 px-4 py-2 text-sm text-gray-900 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 w-full text-left"
+                        className={`flex items-center gap-2 px-4 py-2 text-sm w-full text-left ${
+                          isDark 
+                            ? 'text-gray-200 hover:bg-gray-600' 
+                            : 'text-gray-700 hover:bg-gray-100'
+                        }`}
                         role="menuitem"
                       >
                         <Edit size={16} />
@@ -124,7 +137,11 @@ export const SideMenu: React.FC<SideMenuProps> = ({ onCreateNew, onCloseMenu }) 
                       </button>
                       <button
                         onClick={() => { handleDownload(knot); closePopover(); }}
-                        className="flex items-center gap-2 px-4 py-2 text-sm text-gray-900 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 w-full text-left"
+                        className={`flex items-center gap-2 px-4 py-2 text-sm w-full text-left ${
+                          isDark 
+                            ? 'text-gray-200 hover:bg-gray-600' 
+                            : 'text-gray-700 hover:bg-gray-100'
+                        }`}
                         role="menuitem"
                       >
                         <Download size={16} />
@@ -132,7 +149,11 @@ export const SideMenu: React.FC<SideMenuProps> = ({ onCreateNew, onCloseMenu }) 
                       </button>
                       <button
                         onClick={() => { deleteKnot(knot.id); closePopover(); }}
-                        className="flex items-center gap-2 px-4 py-2 text-sm text-red-500 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-red-400 w-full text-left"
+                        className={`flex items-center gap-2 px-4 py-2 text-sm text-red-500 w-full text-left ${
+                          isDark 
+                            ? 'hover:bg-gray-600' 
+                            : 'hover:bg-gray-100'
+                        }`}
                         role="menuitem"
                       >
                         <Trash2 size={16} />
