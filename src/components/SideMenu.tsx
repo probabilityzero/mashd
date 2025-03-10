@@ -114,11 +114,11 @@ export const SideMenu: React.FC<SideMenuProps> = ({ onCreateNew, onCloseMenu }) 
                 </div>
 
                 {popoverKnotId === knot.id && (
-                  <div ref={popoverRef} className={`absolute left-0 top-full mt-2 w-56 rounded-md shadow-lg ${isDark ? 'bg-gray-700' : 'bg-white text-gray-800'} ring-1 ring-black ring-opacity-5 focus:outline-none z-10`}>
-                    <div className="py-2" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                  <div ref={popoverRef} className={`relative left-0 top-full mt-2 w-48 rounded-md shadow-lg ${isDark ? 'bg-gray-700' : 'bg-white'} ring-1 ring-black ring-opacity-5 focus:outline-none z-10`}>
+                    <div className="" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
                       <button
                         onClick={() => { setEditingKnot(knot); closePopover(); }}
-                        className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 w-full text-left"
+                        className="flex items-center gap-2 px-4 py-2 text-sm text-gray-900 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 w-full text-left"
                         role="menuitem"
                       >
                         <Edit size={16} />
@@ -126,7 +126,7 @@ export const SideMenu: React.FC<SideMenuProps> = ({ onCreateNew, onCloseMenu }) 
                       </button>
                       <button
                         onClick={() => { handleDownload(knot); closePopover(); }}
-                        className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 w-full text-left"
+                        className="flex items-center gap-2 px-4 py-2 text-sm text-gray-900 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 w-full text-left"
                         role="menuitem"
                       >
                         <Download size={16} />
@@ -152,7 +152,7 @@ export const SideMenu: React.FC<SideMenuProps> = ({ onCreateNew, onCloseMenu }) 
             onClick={toggleTheme}
             className={`absolute bottom-4 right-4 p-2 ${
               isDark ? 'hover:bg-gray-700' : 'hover:bg-gray-100'
-            } rounded-full transition-colors flex items-center justify-center gap-2`}
+            } rounded-full transition-colors flex items-center justify-center`}
           >
             {isDark ? <Sun size={20} /> : <Moon size={20} />}
           </button>
