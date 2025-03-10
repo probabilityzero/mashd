@@ -98,7 +98,7 @@ function App() {
     <div className={`min-h-screen ${isDark ? 'dark bg-gradient-to-br from-gray-900 to-gray-800' : 'bg-gradient-to-br from-gray-50 to-blue-50'}`}>
       <header className={`${isDark ? 'bg-gray-800 text-white' : 'bg-white'} shadow-md h-14 w-full sticky top-0 z-30`}>
         <div className="mx-auto px-4 md:px-6 py-0 flex justify-between items-center h-full">
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2">
             <button
               onClick={toggleMenu}
               className={`p-1.5 ${isDark ? 'hover:bg-gray-700' : 'hover:bg-gray-100'} rounded-lg transition-colors`}
@@ -227,10 +227,10 @@ function App() {
                   </span>
                 </div>
                 <h2 className={`text-4xl font-bold mb-5 ${isDark ? 'text-white' : 'text-gray-900'}`}>
-                  Mathematical Visualization Using Mash D
+                Mash D for Mathematical Visualization
                 </h2>
                 <p className={`text-xl mb-8 ${isDark ? 'text-gray-300' : 'text-gray-600'} max-w-2xl mx-auto`}>
-                  Bring geometry and topology to life with interactive 3D visualizations that help you explore complex concepts in a visual way.
+                  Bring algebra, geometry and topology to life with interactive 3D visualizations that help you explore complex concepts in a visual way.
                 </p>
                 <button
                   onClick={handleCreateNew}
