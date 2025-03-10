@@ -112,7 +112,7 @@ export const SideMenu: React.FC<SideMenuProps> = ({ onCreateNew, onCloseMenu }) 
                 </div>
 
                 {popoverKnotId === knot.id && (
-                  <div ref={popoverRef} className={`relative left-0 top-full mt-2 w-48 rounded-md shadow-lg ${isDark ? 'bg-gray-700' : 'bg-white'} ring-1 ring-black ring-opacity-5 focus:outline-none z-10`}>
+                  <div ref={popoverRef} className={`absolute right-0 top-full w-48 rounded-md shadow-lg ${isDark ? 'bg-gray-700' : 'bg-white'} ring-1 ring-black ring-opacity-5 focus:outline-none z-10`}>
                     <div className="" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
                       <button
                         onClick={() => { setEditingKnot(knot); closePopover(); }}
