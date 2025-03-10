@@ -110,7 +110,7 @@ function App() {
               className="text-lg font-semibold md:font-bold cursor-pointer hover:opacity-80 transition-opacity"
               onClick={handleGoHome}
             >
-                Mash<span className="font-serif font-medium md:font-semibold">(d)</span>
+                Mash<span className="font-serif font-medium">(d)</span>
             </h1>
           </div>
           {currentKnot && (

@@ -117,7 +117,7 @@ const Home: React.FC<HomeProps> = ({ isDark, onCreateNew }) => {
             </span>
           </div>
           <h2 className={`text-4xl font-bold mb-4 ${isDark ? 'text-white' : 'text-gray-900'}`}>
-            Mash<span className="font-serif font-semibold">(d)</span> for Mathematical Visualization
+            Mash<span className="font-serif font-medium">(d)</span> for Mathematical Visualization
           </h2>
           <p className={`text-xl mb-8 ${isDark ? 'text-gray-300' : 'text-gray-600'} max-w-2xl mx-auto`}>
             Bring algebra, geometry and topology to life with interactive multi-dimension visualizations to explore concepts in a visual way.
