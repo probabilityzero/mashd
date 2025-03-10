@@ -177,7 +177,7 @@ function App() {
               onClick={handleCreateNew}
               className="flex items-center p-1 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-full hover:from-blue-700 hover:to-indigo-700 transition-all shadow-md hover:shadow-lg text-base font-medium"
             >
-              <PlusCircle size={18} className="mr-1" />
+              <PlusCircle size={18}/>
               {/* <span>New</span> */}
             </button>
           </div>
@@ -282,7 +282,7 @@ function App() {
       Mash<span className="font-serif font-semibold">(d)</span> for Mathematical Visualization
     </h2>
     <p className={`text-xl mb-8 ${isDark ? 'text-gray-300' : 'text-gray-600'} max-w-2xl mx-auto`}>
-      Bring algebra, geometry and topology to life with interactive multi-dimension visualizations that help you explore complex concepts in a visual way.
+      Bring algebra, geometry and topology to life with interactive multi-dimension visualizations to explore concepts in a visual way.
     </p>
     <button
       onClick={handleCreateNew}
