@@ -66,12 +66,13 @@ const defaultKnots: KnotDefinition[] = [
   },
   {
     id: 'mobius',
-    name: 'Mobius Slice',
+    name: 'Möbius Slice',
     description: 'A 1D slice of a Möbius strip that approximates a twisting loop in 3D.',
     lastModified: Date.now(),
     code: `function generatePoints(t) {
   // Approximating a Möbius strip curve with a twist along the circle.
   // Here, t ranges from 0 to 2π.
+  const scale = 2;
   const R = 5;      // Radius of the central circle
   const twist = Math.sin(3 * t) * 0.5;  // Variation to simulate the half-twist
   const x = (R + twist * Math.cos(t / 2)) * Math.cos(t);
@@ -87,7 +88,7 @@ const defaultKnots: KnotDefinition[] = [
     lastModified: Date.now(),
     code: `function generatePoints(t) {
   // t ranges from 0 to 2π, mapping to x.
-  const scale = 2.5;
+  const scale = 3;
   const x = scale * t;
   const y = scale * Math.sin(t);
   const z = 0;
