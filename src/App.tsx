@@ -149,28 +149,29 @@ function App() {
 
             <div className="flex">
               <div className="flex flex-col w-full">
-                <div className={`${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} rounded-lg shadow-lg overflow-hidden mt-2 border`}>
-                  <div className="flex p-1.5 justify-between items-center border-b border-gray-200 dark:border-gray-700 bg-gradient-to-r from-blue-50 to-white dark:from-gray-800 dark:to-gray-700">
-                    <div className="flex space-x-1">
-                      {(['input', 'code', 'latex', 'mathjax'] as const).map((tab) => (
-                        <button
-                          key={tab}
-                          onClick={() => setActiveTab(tab)}
-                          className={`px-3 py-1 capitalize text-sm font-medium rounded-full transition-colors ${
-                            activeTab === tab
-                              ? isDark
-                                ? 'bg-blue-600 text-white'
-                                : 'bg-blue-500 text-white'
-                              : isDark
-                              ? 'text-gray-300 hover:bg-gray-700 hover:text-white'
-                              : 'text-gray-700 hover:bg-gray-200'
-                          }`}
-                        >
-                          {tab === 'input' ? 'Input' : tab}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
+              <div className={`${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} rounded-lg shadow-lg overflow-hidden mt-2 border`}>
+  <div className="flex p-1.5 justify-between items-center border-b border-gray-200 dark:border-gray-700 bg-gradient-to-r 
+    ${isDark ? 'from-gray-800 to-gray-700' : 'from-blue-300 to-blue-500'}">
+    <div className="flex space-x-1">
+      {(['input', 'code', 'latex', 'mathjax'] as const).map((tab) => (
+        <button
+          key={tab}
+          onClick={() => setActiveTab(tab)}
+          className={`px-3 py-1 capitalize text-sm font-medium rounded-full transition-colors ${
+            activeTab === tab
+              ? isDark
+                ? 'bg-blue-600 text-white'
+                : 'bg-blue-700 text-white'
+              : isDark
+              ? 'text-gray-300 hover:bg-gray-700 hover:text-white'
+              : 'text-blue-900 hover:bg-blue-200 hover:text-blue-900'
+          }`}
+        >
+          {tab === 'input' ? 'Input' : tab}
+        </button>
+      ))}
+    </div>
+</div>
 
                   <div className="overflow-hidden">
                     {activeTab === 'input' && (
@@ -259,7 +260,7 @@ function App() {
                       onClick={() => selectKnot(knot.id)}
                     >
                       {/* Real Visualization Instead of Thumbnail */}
-                      <div className="h-36 w-full overflow-hidden relative">
+                      <div className="h-36 w-full overflow-hidden relative pointer-events-none">
                         {renderVisualization(knot.code)}
                       </div>
                       
