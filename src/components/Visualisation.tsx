@@ -35,8 +35,8 @@ export const Visualisation: React.FC<KnotVisualizerProps> = ({ code, isDark, edi
       1000
     );
     
-    // Position the camera further back and slightly elevated for a better view
-    cameraRef.current.position.set(0, 5, 20); // Increased Z to zoom out, added Y for angle
+    // Position the camera further back with a lower elevation to shift view downward
+    cameraRef.current.position.set(0, -5, 20); // Reduced Y from 5 to 2 to move view lower
 
     // Setup renderer with pixel ratio for better quality
     rendererRef.current = new THREE.WebGLRenderer({ 

@@ -256,7 +256,7 @@ function App() {
                         isDark 
                           ? 'bg-gray-800 hover:bg-gray-750 border-gray-700' 
                           : 'bg-white hover:bg-blue-50 border-gray-200'
-                      } rounded-xl shadow-md transition-all duration-200 overflow-hidden border hover:shadow-lg group cursor-pointer`}
+                      } rounded-xl shadow-md transition-all duration-200 overflow-hidden border hover:shadow-lg group-hover:scale-105 group cursor-pointer`}
                       onClick={() => selectKnot(knot.id)}
                     >
                       {/* Real Visualization Instead of Thumbnail */}
@@ -264,8 +264,8 @@ function App() {
                         {renderVisualization(knot.code)}
                       </div>
                       
-                      <div className="p-3">
-                        <h3 className={`text-xl font-medium mb-1 group-hover:bg-gray-500 transition-colors ${isDark ? 'text-white' : 'text-gray-800'}`} style={{ fontFamily: 'serif' }}>
+                      <div className="p-3 py-2">
+                        <h3 className={`text-xl font-medium mb-1 transition-colors ${isDark ? 'text-white' : 'text-gray-800'}`} style={{ fontFamily: 'serif' }}>
                           {knot.name}
                         </h3>
                         <p className={`${isDark ? 'text-gray-300' : 'text-gray-600'} text-sm`}>
