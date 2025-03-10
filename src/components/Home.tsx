@@ -90,13 +90,13 @@ const Home: React.FC<HomeProps> = ({ isDark, onCreateNew }) => {
       >
         {/* Base Glow Effect for Hero - More subtle */}
         <div 
-          className="absolute inset-0 pointer-events-none z-[-1] filter blur-3xl opacity-20 bg-gradient-to-r from-blue-500 via-purple-400 to-blue-400 transition-opacity duration-300"
+          className="absolute inset-0 pointer-events-none z-[-1] filter blur-3xl opacity-20 bg-gradient-to-r from-blue-500 via-purple-400 to-blue-400 transition-opacity"
         />
         
         {/* Mouse follow glow effect - More subtle and faster */}
         {heroHover.isHovering && (
           <div 
-            className="absolute pointer-events-none filter blur-3xl opacity-20 bg-gradient-to-r from-blue-500 via-lavender-500 to-purple-400 rounded-full transition-all"
+            className="absolute pointer-events-none filter blur-3xl opacity-20 bg-gradient-to-r from-blue-500 via-lavender-500 to-purple-400 rounded-full ease-out"
             style={{
               width: '280px',
               height: '280px',
@@ -124,7 +124,7 @@ const Home: React.FC<HomeProps> = ({ isDark, onCreateNew }) => {
           </p>
           <button
             onClick={onCreateNew}
-            className="flex items-center gap-2 px-8 py-2 bg-gradient-to-r from-blue-600 via-indigo-500 to-purple-600 text-white rounded-lg hover:from-blue-700 hover:via-indigo-600 hover:to-purple-700 transition-all shadow-md hover:shadow-lg text-lg mx-auto font-medium"
+            className="flex items-center gap-2 px-8 py-2 bg-gradient-to-r from-blue-600 via-indigo-500 to-purple-600 text-white rounded-lg hover:from-blue-700 hover:via-indigo-600 hover:to-purple-700 shadow-md hover:shadow-lg text-lg mx-auto font-medium"
           >
             <Plus size={24} />
             Create New
