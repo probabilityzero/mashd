@@ -111,11 +111,11 @@ function App() {
             <div className="absolute left-1/2 transform -translate-x-1/2 flex items-center">
               <button
                 onClick={() => setShowEditModal(true)}
-                className={`text-base font-semibold ${isDark ? 'text-gray-200 hover:text-white' : 'text-gray-700 hover:text-gray-900'} flex items-center gap-1`}
+                className={`text-base font-medium ${isDark ? 'text-gray-200 hover:text-white' : 'text-gray-700 hover:text-gray-900'} flex items-center gap-1`}
                 style={{ fontFamily: 'serif' }}
               >
                 {currentKnot.name}
-                <Pencil size={10} className="pl-1" />
+                <Pencil size={12} className="pl-1" />
               </button>
             </div>
           )}
@@ -129,10 +129,10 @@ function App() {
             </button>
             <button
               onClick={handleCreateNew}
-              className="flex items-center gap-2 p-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl hover:from-blue-700 hover:to-indigo-700 transition-all shadow-md hover:shadow-lg text-lg font-medium"
+              className="flex items-center gap-2 py-1 px-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl hover:from-blue-700 hover:to-indigo-700 transition-all shadow-md hover:shadow-lg text-base font-normal"
             >
               <Plus size={18} />
-              <span>New</span>
+              <span>Create</span>
             </button>
           </div>
         </div>
@@ -206,7 +206,7 @@ function App() {
             <div 
               className={`${
                 isDark ? 'bg-gradient-to-br from-gray-800 to-gray-900' : 'bg-gradient-to-br from-white to-blue-50'
-              } rounded-xl shadow-xl p-10 text-center border ${
+              } rounded-xl shadow-xl p-8 py-14 text-center border ${
                 isDark ? 'border-gray-700' : 'border-blue-100'
               }`} 
               style={{ 
@@ -219,7 +219,7 @@ function App() {
               }}
             >
               <div className="max-w-3xl mx-auto">
-                <div className="mb-2">
+                <div className="mb-2.5">
                   <span className={`inline-block px-3 py-1 text-sm rounded-full ${
                     isDark ? 'bg-blue-900 text-blue-200' : 'bg-blue-100 text-blue-800'
                   }`}>
@@ -265,7 +265,7 @@ function App() {
                       </div>
                       
                       <div className="p-3">
-                        <h3 className={`text-xl font-medium mb-1 group-hover:text-blue-500 transition-colors ${isDark ? 'text-white' : 'text-gray-800'}`} style={{ fontFamily: 'serif' }}>
+                        <h3 className={`text-xl font-medium mb-1 group-hover:bg-gray-500 transition-colors ${isDark ? 'text-white' : 'text-gray-800'}`} style={{ fontFamily: 'serif' }}>
                           {knot.name}
                         </h3>
                         <p className={`${isDark ? 'text-gray-300' : 'text-gray-600'} text-sm`}>
