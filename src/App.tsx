@@ -26,8 +26,8 @@ function App() {
   const handleCreateNew = () => {
     const newKnot = {
       id: `math-${Date.now()}`,
-      name: 'New Visualization',
-      description: 'Custom mathematical visualization',
+      name: 'My Visualization',
+      description: 'My mathematical visualization',
       lastModified: Date.now(),
       code: `function generatePoints(t) {
   const x = Math.sin(t);
@@ -68,9 +68,9 @@ function App() {
 
 
   return (
-    <div className={`min-h-screen ${isDark ? 'dark bg-gray-900' : 'bg-gray-100'}`}>
-      <header className={`${isDark ? 'bg-gray-800 text-white' : 'bg-white'} shadow-sm h-12`}> {/* Reduced header height to h-12 (3rem which is roughly 5 units) */}
-        <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between h-full"> {/* Ensure full height for content */}
+    <div className={`min-h-screen ${isDark ? 'dark bg-gray-900' : 'bg-gray-50'}`}>
+      <header className={`${isDark ? 'bg-gray-800 text-white' : 'bg-white'} shadow-md h-14 w-full sticky top-0 z-30`}>
+        <div className="mx-auto px-4 md:px-6 py-0 flex justify-between items-center h-full">
           <div className="flex items-center gap-4">
             <button
               onClick={toggleMenu}
@@ -78,50 +78,56 @@ function App() {
             >
               {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
-            <h1 className="text-xl font-semibold text-center flex-1">Mash D</h1> {/* Centered App Name "Mash D" */}
+            <h1 className="text-xl font-bold">Mash D</h1>
           </div>
           {currentKnot && (
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"> {/* Centering the knot name */}
+            <div className="absolute left-1/2 transform -translate-x-1/2">
               <button
                 onClick={() => setShowEditModal(true)}
-                className={`text-lg font-medium ${isDark ? 'text-gray-300 hover:text-white' : 'text-gray-700 hover:text-gray-900'}`}
+                className={`text-lg font-medium ${isDark ? 'text-gray-200 hover:text-white' : 'text-gray-700 hover:text-gray-900'}`}
               >
                 {currentKnot.name}
               </button>
             </div>
           )}
           <div className="flex items-center gap-4">
+            <button
+              onClick={toggleTheme}
+              className={`p-2 ${isDark ? 'hover:bg-gray-700' : 'hover:bg-gray-100'} rounded-full transition-colors`}
+            >
+              {isDark ? <Sun size={20} /> : <Moon size={20} />}
+            </button>
           </div>
         </div>
       </header>
 
       {isMenuOpen && <div className="fixed inset-0 bg-black bg-opacity-50 z-40" onClick={handleClickOutside} />}
-      <SideMenu onCreateNew={handleCreateNew} />
+      <SideMenu onCreateNew={handleCreateNew} onCloseMenu={toggleMenu} />
 
-      <main className="max-w-7xl mx-auto p-4">
+      <main className="container mx-auto px-4 md:px-6 py-8">
         {currentKnot ? (
           <div className="space-y-6">
-            <div className={`${isDark ? 'bg-gray-800' : 'bg-white'} rounded-lg shadow-md overflow-hidden`} style={{ height: '600px' }}>
+            <div className={`${isDark ? 'bg-gray-800' : 'bg-white'} rounded-lg shadow-lg overflow-hidden`} style={{ height: '600px' }}>
               <Visualisation code={currentKnot.code} isDark={isDark} editingKnot={editingKnot} onDeleteKnot={handleDeleteKnot} onDownloadKnot={handleDownload} setShowEditModal={setShowEditModal} />
             </div>
 
             <div className="flex">
-              <div className="flex flex-col w-full"> {/* Ensure column takes full width */}
-                <div className={`${isDark ? 'bg-gray-800' : 'bg-white'} rounded-lg shadow-md overflow-hidden mt-2`}> {/* Border and margin container */}
-                  <div className="flex p-1 justify-between items-center border-b border-gray-100 dark:border-gray-800"> {/* Border for the nav area */}
-                    <div className="flex"> {/* Container for tabs to keep them left-aligned */}
+              <div className="flex flex-col w-full">
+                <div className={`${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} rounded-lg shadow-lg overflow-hidden mt-2 border`}>
+                  <div className="flex p-2 justify-between items-center border-b border-gray-200 dark:border-gray-700 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-gray-800 dark:to-gray-750">
+                    <div className="flex space-x-2">
                       {(['input', 'code', 'latex', 'mathjax'] as const).map((tab) => (
                         <button
                           key={tab}
                           onClick={() => setActiveTab(tab)}
-                          className={`px-3 py-1 capitalize space-x-1 text-sm rounded-full transition-colors ${ // Rounded-full for pill shape
+                          className={`px-4 py-1.5 capitalize text-sm font-medium rounded-full transition-colors ${
                             activeTab === tab
                               ? isDark
-                                ? 'bg-gray-700 text-white'
+                                ? 'bg-blue-600 text-white'
                                 : 'bg-blue-500 text-white'
                               : isDark
-                              ? 'text-gray-300 hover:bg-gray-700'
-                              : 'text-gray-700 hover:bg-gray-100'
+                              ? 'text-gray-300 hover:bg-gray-700 hover:text-white'
+                              : 'text-gray-700 hover:bg-gray-200'
                           }`}
                         >
                           {tab === 'input' ? 'Input' : tab}
@@ -130,9 +136,9 @@ function App() {
                     </div>
                   </div>
 
-                  <div className="overflow-hidden"> {/* Content area below tabs */}
+                  <div className="overflow-hidden">
                     {activeTab === 'input' && (
-                      <div className="p-4"> {/* Reduced padding */}
+                      <div className="p-4">
                         <p className="text-lg">Input options and controls coming soon...</p>
                       </div>
                     )}
@@ -144,12 +150,12 @@ function App() {
                       />
                     )}
                     {activeTab === 'latex' && (
-                      <div className="p-4"> {/* Reduced padding */}
+                      <div className="p-4">
                         <p className="text-lg">LaTeX representation coming soon...</p>
                       </div>
                     )}
                     {activeTab === 'mathjax' && (
-                      <div className="p-4"> {/* Reduced padding */}
+                      <div className="p-4">
                         <p className="text-lg">MathJax representation coming soon...</p>
                       </div>
                     )}
@@ -159,40 +165,95 @@ function App() {
             </div>
           </div>
         ) : (
-          <div className="space-y-8">
-            <div className={`${isDark ? 'bg-gray-800' : 'bg-white'} items-center rounded-lg shadow-md p-8 text-center`} style={{ height: '350px', marginTop: '12rem', md: { marginTop: '2rem' } }}>
-              <h2 className={`text-3xl font-bold mb-4 ${isDark ? 'text-white' : 'text-gray-900'}`}>
-                Create Your Mathematical Visualization
-              </h2>
-              <p className={`text-lg mb-6 ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
-                Bring mathematics to life with interactive 3D visualizations
-              </p>
-              <button
-                onClick={handleCreateNew}
-                className="flex items-center gap-2 px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors text-lg mx-auto"
-              >
-                <Plus size={24} />
-                Start Creating
-              </button>
+          <div className="space-y-12 max-w-6xl mx-auto">
+            <div 
+              className={`${
+                isDark ? 'bg-gradient-to-br from-gray-800 to-gray-900' : 'bg-gradient-to-br from-white to-blue-50'
+              } rounded-xl shadow-xl p-10 text-center border ${
+                isDark ? 'border-gray-700' : 'border-blue-100'
+              }`} 
+              style={{ 
+                marginTop: '2rem',
+                minHeight: '320px',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center'
+              }}
+            >
+              <div className="max-w-3xl mx-auto">
+                <div className="mb-2">
+                  <span className={`inline-block px-3 py-1 text-sm rounded-full ${
+                    isDark ? 'bg-blue-900 text-blue-200' : 'bg-blue-100 text-blue-800'
+                  }`}>
+                    Mathematical Visualization Tool
+                  </span>
+                </div>
+                <h2 className={`text-4xl font-bold mb-6 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                  Create Your Mathematical Visualization
+                </h2>
+                <p className={`text-xl mb-8 ${isDark ? 'text-gray-300' : 'text-gray-600'} max-w-2xl mx-auto`}>
+                  Bring mathematics to life with interactive 3D visualizations that help you explore complex concepts in a visual way.
+                </p>
+                <button
+                  onClick={handleCreateNew}
+                  className="flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg hover:from-blue-700 hover:to-indigo-700 transition-all shadow-md hover:shadow-lg text-lg mx-auto font-medium"
+                >
+                  <Plus size={24} />
+                  Start Creating
+                </button>
+              </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {knots.map((knot) => (
-                <button
-                  key={knot.id}
-                  onClick={() => updateKnot(knot.id, {})}
-                  className={`${
-                    isDark ? 'bg-gray-800 hover:bg-gray-700' : 'bg-white hover:bg-gray-50'
-                  } p-6 rounded-lg shadow-md text-left transition-colors`}
-                >
-                  <h3 className={`text-xl font-medium mb-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>
-                    {knot.name}
-                  </h3>
-                  <p className={`${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
-                    {knot.description}
-                  </p>
-                </button>
-              ))}
+            <div className="mt-12">
+              <h3 className={`text-2xl font-bold mb-6 ${isDark ? 'text-white' : 'text-gray-900'} text-center`}>
+                Your Visualizations
+              </h3>
+              
+              {knots.length > 0 ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {knots.map((knot) => (
+                    <div 
+                      key={knot.id}
+                      className={`${
+                        isDark 
+                          ? 'bg-gray-800 hover:bg-gray-750 border-gray-700' 
+                          : 'bg-white hover:bg-blue-50 border-gray-200'
+                      } rounded-xl shadow-md transition-all duration-200 overflow-hidden border hover:shadow-lg group cursor-pointer`}
+                      onClick={() => selectKnot(knot.id)}
+                    >
+                      <div className={`h-3 w-full ${isDark ? 'bg-blue-600' : 'bg-blue-500'}`}></div>
+                      <div className="p-6">
+                        <h3 className={`text-xl font-semibold mb-3 group-hover:text-blue-500 transition-colors ${isDark ? 'text-white' : 'text-gray-800'}`}>
+                          {knot.name}
+                        </h3>
+                        <p className={`${isDark ? 'text-gray-300' : 'text-gray-600'} mb-4`}>
+                          {knot.description}
+                        </p>
+                        <div className="flex justify-between items-center pt-2 border-t border-dashed border-gray-200 dark:border-gray-700 mt-2">
+                          <span className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                            Last modified: {new Date(knot.lastModified).toLocaleDateString()}
+                          </span>
+                          <button 
+                            className={`p-1.5 rounded-full ${isDark ? 'hover:bg-gray-700' : 'hover:bg-gray-100'}`}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setEditingKnot(knot);
+                              setShowEditModal(true);
+                            }}
+                          >
+                            <Edit size={16} className={isDark ? 'text-gray-400' : 'text-gray-500'} />
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className={`text-center p-8 rounded-lg ${isDark ? 'bg-gray-800 text-gray-300' : 'bg-gray-100 text-gray-600'}`}>
+                  <p>You haven't created any visualizations yet. Click "Start Creating" to begin.</p>
+                </div>
+              )}
             </div>
           </div>
         )}
