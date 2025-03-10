@@ -111,11 +111,11 @@ function App() {
             <div className="absolute left-1/2 transform -translate-x-1/2 flex items-center">
               <button
                 onClick={() => setShowEditModal(true)}
-                className={`text-base font-medium ${isDark ? 'text-gray-200 hover:text-white' : 'text-gray-700 hover:text-gray-900'} flex items-center gap-1`}
+                className={`text-lg font-medium ${isDark ? 'text-gray-200 hover:text-white' : 'text-gray-700 hover:text-gray-900'} flex items-center gap-1`}
                 style={{ fontFamily: 'serif' }}
               >
                 {currentKnot.name}
-                <Pencil size={12} className="pl-1" />
+                <Pencil size={14} className="pl-1" />
               </button>
             </div>
           )}
@@ -151,7 +151,7 @@ function App() {
               <div className="flex flex-col w-full">
               <div className={`${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} rounded-lg shadow-lg overflow-hidden mt-2 border`}>
   <div className="flex p-1.5 justify-between items-center border-b border-gray-200 dark:border-gray-700 bg-gradient-to-r 
-    ${isDark ? 'from-gray-800 to-gray-700' : 'from-blue-300 to-blue-500'}">
+    ${isDark ? 'to-gray-800 from-gray-700' : 'from-blue-300 to-blue-500'}">
     <div className="flex space-x-1">
       {(['input', 'code', 'latex', 'mathjax'] as const).map((tab) => (
         <button

@@ -88,7 +88,7 @@ const defaultKnots: KnotDefinition[] = [
     lastModified: Date.now(),
     code: `function generatePoints(t) {
   // t ranges from 0 to 2π, mapping to x.
-  const scale = 2.9;
+  const scale = 3.1;
   const x = scale * t;
   const y = scale * Math.sin(t);
   const z = 0;

@@ -26,7 +26,7 @@ export const EditModal: React.FC<EditModalProps> = ({ knot, onClose, isDark }) =
         <div className="p-6">
           <div className="flex justify-between items-center mb-4">
             <h2 className={`text-xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
-              Edit Visualization
+              Edit Details
             </h2>
             <button
               onClick={onClose}
