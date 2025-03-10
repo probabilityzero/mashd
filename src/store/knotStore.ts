@@ -50,54 +50,47 @@ const defaultKnots: KnotDefinition[] = [
   {
     id: 'lemniscate',
     name: 'Lemniscate of Bernoulli',
-    description: 'A classic 2D figure-eight curve defined in polar coordinates.',
+    description: 'A classic 2D figure-eight curve. (z is set to 0)',
     lastModified: Date.now(),
     code: `function generatePoints(t) {
-  // Lemniscate parametric equations for a 2D figure-eight curve
-  const a = 5; // scale factor
-  // Using a common parametrization: r^2 = a^2 cos(2t)
-  // r = a * Math.sqrt(Math.cos(2*t)) (only valid when cos(2*t) >= 0)
-  const cos2t = Math.cos(2 * t);
-  if (cos2t < 0) return [null, null]; // skip undefined points
-  const r = a * Math.sqrt(cos2t);
+  // Lemniscate parametric equations in 2D, with z fixed to 0.
+  // Using an adjusted version to avoid sqrt issues: 
+  // r = a * sqrt(|cos(2*t)|)
+  const a = 5;
+  const r = a * Math.sqrt(Math.abs(Math.cos(2 * t)));
   const x = r * Math.cos(t);
   const y = r * Math.sin(t);
-  return [x, y];
-}`
-  },
-  {
-    id: 'mobius',
-    name: 'Möbius Strip',
-    description: 'A non-orientable 3D surface with only one side and one boundary.',
-    lastModified: Date.now(),
-    code: `function generatePoints(u, v) {
-  // u: angle around the circle (0 to 2π)
-  // v: position across the width (-1 to 1)
-  const R = 5; // radius of the center circle
-  const x = (R + v * Math.cos(u / 2)) * Math.cos(u);
-  const y = (R + v * Math.cos(u / 2)) * Math.sin(u);
-  const z = v * Math.sin(u / 2);
+  const z = 0;
   return [x, y, z];
 }`
   },
   {
-    id: 'kleinBottle',
-    name: 'Klein Bottle',
-    description: 'A famous non-orientable surface that cannot be embedded in 3D without self-intersections.',
+    id: 'mobius',
+    name: 'Mobius Slice',
+    description: 'A 1D slice of a Möbius strip that approximates a twisting loop in 3D.',
     lastModified: Date.now(),
-    code: `function generatePoints(u, v) {
-  // u and v vary from 0 to 1, then scaled to 0 to 2π
-  u = u * 2 * Math.PI;
-  v = v * 2 * Math.PI;
-  let x, y, z;
-  if (u < Math.PI) {
-    x = 3 * Math.cos(u) * (1 + Math.sin(u)) + (2 * (1 - Math.cos(u) / 2)) * Math.cos(u) * Math.cos(v);
-    y = 3 * Math.sin(u) * (1 + Math.sin(u)) + (2 * (1 - Math.cos(u) / 2)) * Math.sin(u) * Math.cos(v);
-  } else {
-    x = 3 * Math.cos(u) * (1 + Math.sin(u)) + (2 * (1 - Math.cos(u) / 2)) * Math.cos(v + Math.PI);
-    y = 3 * Math.sin(u) * (1 + Math.sin(u)) + (2 * (1 - Math.cos(u) / 2)) * Math.sin(v + Math.PI);
-  }
-  z = (2 * (1 - Math.cos(u) / 2)) * Math.sin(v);
+    code: `function generatePoints(t) {
+  // Approximating a Möbius strip curve with a twist along the circle.
+  // Here, t ranges from 0 to 2π.
+  const R = 5;      // Radius of the central circle
+  const twist = Math.sin(3 * t) * 0.5;  // Variation to simulate the half-twist
+  const x = (R + twist * Math.cos(t / 2)) * Math.cos(t);
+  const y = (R + twist * Math.cos(t / 2)) * Math.sin(t);
+  const z = twist * Math.sin(t / 2);
+  return [x, y, z];
+}`
+  },
+  {
+    id: 'sineCurve2D',
+    name: '2D Sine Wave',
+    description: 'A simple 2D sine wave plotted as a curve. (z is set to 0)',
+    lastModified: Date.now(),
+    code: `function generatePoints(t) {
+  // t ranges from 0 to 2π, mapping to x.
+  const scale = 4;
+  const x = scale * t;
+  const y = scale * Math.sin(t);
+  const z = 0;
   return [x, y, z];
 }`
   }
