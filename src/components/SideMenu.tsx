@@ -125,7 +125,7 @@ export const SideMenu: React.FC<SideMenuProps> = ({ onCreateNew, onCloseMenu }) 
                     <div className="" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
                       <button
                         onClick={() => { setEditingKnot(knot); closePopover(); }}
-                        className={`flex items-center gap-2 px-4 py-2 text-sm w-full text-left ${
+                        className={`flex items-center gap-3 px-4 py-2 text-sm w-full text-left ${
                           isDark 
                             ? 'text-gray-200 hover:bg-gray-600' 
                             : 'text-gray-700 hover:bg-gray-100'
@@ -137,7 +137,7 @@ export const SideMenu: React.FC<SideMenuProps> = ({ onCreateNew, onCloseMenu }) 
                       </button>
                       <button
                         onClick={() => { handleDownload(knot); closePopover(); }}
-                        className={`flex items-center gap-2 px-4 py-2 text-sm w-full text-left ${
+                        className={`flex items-center gap-3 px-4 py-2 text-sm w-full text-left ${
                           isDark 
                             ? 'text-gray-200 hover:bg-gray-600' 
                             : 'text-gray-700 hover:bg-gray-100'
@@ -149,7 +149,7 @@ export const SideMenu: React.FC<SideMenuProps> = ({ onCreateNew, onCloseMenu }) 
                       </button>
                       <button
                         onClick={() => { deleteKnot(knot.id); closePopover(); }}
-                        className={`flex items-center gap-2 px-4 py-2 text-sm text-red-500 w-full text-left ${
+                        className={`flex items-center gap-3 px-4 py-2 text-sm text-red-500 w-full text-left ${
                           isDark 
                             ? 'hover:bg-gray-600' 
                             : 'hover:bg-gray-100'
