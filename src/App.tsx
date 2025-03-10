@@ -4,7 +4,7 @@ import { CodeEditor } from './components/CodeEditor';
 import { SideMenu } from './components/SideMenu';
 import { EditModal } from './components/EditModal';
 import { useKnotStore } from './store/knotStore';
-import { Menu, Plus, X, Moon, Sun, Info, Download, Edit, Trash2, MoreVertical } from 'lucide-react';
+import { Menu, Plus, X, Moon, Sun, Info, Download, Edit, Trash2, MoreVertical, Pencil } from 'lucide-react';
 import { useTheme } from './store/themeStore';
 import { KnotDefinition } from './types/knot';
 
@@ -12,7 +12,7 @@ function App() {
   const { knots, selectedKnot, isMenuOpen, toggleMenu, addKnot, updateKnot, deleteKnot, selectedKnotData, selectKnot } = useKnotStore();
   const { isDark, toggleTheme } = useTheme();
   const [showEditModal, setShowEditModal] = useState(false);
-  const [activeTab, setActiveTab] = useState<'input' | 'code' | 'latex' | 'mathjax'>('code'); // Default to 'code' - changed default tab
+  const [activeTab, setActiveTab] = useState<'input' | 'code' | 'latex' | 'mathjax'>('code'); // Default to 'code'
   const currentKnot = knots.find(k => k.id === selectedKnot);
   const [editingKnot, setEditingKnot] = useState<KnotDefinition | undefined>(selectedKnotData);
 
@@ -85,54 +85,17 @@ function App() {
     }
   };
 
-  // Function to generate a thumbnail preview based on the code
-  const generateThumbnail = (code: string) => {
-    // This is a simplified version - we'd use the actual visualization logic
-    // For now, it creates a simple SVG pattern based on the code hash
-    const hash = code.split('').reduce((a, b) => {
-      a = ((a << 5) - a) + b.charCodeAt(0);
-      return a & a;
-    }, 0);
-    
-    const colors = [
-      '#3B82F6', '#60A5FA', '#93C5FD', // blues
-      '#8B5CF6', '#A78BFA', '#C4B5FD', // purples
-      '#EC4899', '#F472B6', '#FBCFE8'  // pinks
-    ];
-    
-    const bg = colors[Math.abs(hash) % colors.length];
-    const pattern = Math.abs(hash) % 4; // 0-3 different patterns
-    
+  // Use actual visualization instead of the thumbnail preview
+  const renderVisualization = (code: string) => {
     return (
-      <svg width="100%" height="100%" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-        <rect width="100" height="100" fill={bg} opacity="0.7" />
-        {pattern === 0 && (
-          <>
-            <circle cx="50" cy="50" r="30" fill="white" opacity="0.2" />
-            <circle cx="50" cy="50" r="20" fill="white" opacity="0.3" />
-          </>
-        )}
-        {pattern === 1 && (
-          <>
-            <line x1="0" y1="0" x2="100" y2="100" stroke="white" strokeWidth="5" opacity="0.3" />
-            <line x1="100" y1="0" x2="0" y2="100" stroke="white" strokeWidth="5" opacity="0.3" />
-          </>
-        )}
-        {pattern === 2 && (
-          <path d="M10,30 Q50,10 90,30 T90,70 Q50,90 10,70 T10,30" fill="none" stroke="white" strokeWidth="3" opacity="0.4" />
-        )}
-        {pattern === 3 && (
-          <>
-            <rect x="20" y="20" width="60" height="60" stroke="white" strokeWidth="3" fill="none" opacity="0.3" />
-            <rect x="35" y="35" width="30" height="30" stroke="white" strokeWidth="2" fill="white" opacity="0.2" />
-          </>
-        )}
-      </svg>
+      <div className="w-full h-full">
+        <Visualisation code={code} isDark={isDark} />
+      </div>
     );
   };
 
   return (
-    <div className={`min-h-screen ${isDark ? 'dark bg-gray-900' : 'bg-gray-50'}`}>
+    <div className={`min-h-screen ${isDark ? 'dark bg-gradient-to-br from-gray-900 to-gray-800' : 'bg-gradient-to-br from-gray-50 to-blue-50'}`}>
       <header className={`${isDark ? 'bg-gray-800 text-white' : 'bg-white'} shadow-md h-14 w-full sticky top-0 z-30`}>
         <div className="mx-auto px-4 md:px-6 py-0 flex justify-between items-center h-full">
           <div className="flex items-center gap-4">
@@ -142,24 +105,33 @@ function App() {
             >
               {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
-            <h1 className="text-xl font-bold">Mash D</h1>
+            <h1 className="text-xl font-bold" style={{ fontFamily: 'serif' }}>Mash D</h1>
           </div>
           {currentKnot && (
-            <div className="absolute left-1/2 transform -translate-x-1/2">
+            <div className="absolute left-1/2 transform -translate-x-1/2 flex items-center">
               <button
                 onClick={() => setShowEditModal(true)}
-                className={`text-lg font-medium ${isDark ? 'text-gray-200 hover:text-white' : 'text-gray-700 hover:text-gray-900'}`}
+                className={`text-base font-medium ${isDark ? 'text-gray-200 hover:text-white' : 'text-gray-700 hover:text-gray-900'} flex items-center gap-1.5`}
+                style={{ fontFamily: 'serif' }}
               >
                 {currentKnot.name}
+                <Pencil size={14} className="ml-1" />
               </button>
             </div>
           )}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2">
+            <button
+              onClick={handleCreateNew}
+              className={`p-2 ${isDark ? 'hover:bg-gray-700 bg-gray-700' : 'hover:bg-gray-100 bg-blue-50'} rounded-full transition-colors flex items-center justify-center`}
+              title="Create New"
+            >
+              <Plus size={18} />
+            </button>
             <button
               onClick={toggleTheme}
               className={`p-2 ${isDark ? 'hover:bg-gray-700' : 'hover:bg-gray-100'} rounded-full transition-colors`}
             >
-              {isDark ? <Sun size={20} /> : <Moon size={20} />}
+              {isDark ? <Sun size={18} /> : <Moon size={18} />}
             </button>
           </div>
         </div>
@@ -253,7 +225,7 @@ function App() {
                     Mathematical Visualization Tool
                   </span>
                 </div>
-                <h2 className={`text-4xl font-bold mb-6 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                <h2 className={`text-4xl font-bold mb-6 ${isDark ? 'text-white' : 'text-gray-900'}`} style={{ fontFamily: 'serif' }}>
                   Create Your Mathematical Visualization
                 </h2>
                 <p className={`text-xl mb-8 ${isDark ? 'text-gray-300' : 'text-gray-600'} max-w-2xl mx-auto`}>
@@ -264,13 +236,13 @@ function App() {
                   className="flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg hover:from-blue-700 hover:to-indigo-700 transition-all shadow-md hover:shadow-lg text-lg mx-auto font-medium"
                 >
                   <Plus size={24} />
-                  Start Creating
+                  Create New
                 </button>
               </div>
             </div>
 
             <div className="mt-12">
-              <h3 className={`text-2xl font-bold mb-4 ${isDark ? 'text-white' : 'text-gray-900'} text-center`}>
+              <h3 className={`text-2xl font-bold mb-4 ${isDark ? 'text-white' : 'text-gray-900'} text-center`} style={{ fontFamily: 'serif' }}>
                 Your Visualizations
               </h3>
               
@@ -286,32 +258,22 @@ function App() {
                       } rounded-xl shadow-md transition-all duration-200 overflow-hidden border hover:shadow-lg group cursor-pointer`}
                       onClick={() => selectKnot(knot.id)}
                     >
-                      {/* Visualization Thumbnail */}
+                      {/* Real Visualization Instead of Thumbnail */}
                       <div className="h-32 w-full overflow-hidden relative">
-                        {generateThumbnail(knot.code)}
+                        {renderVisualization(knot.code)}
                       </div>
                       
-                      <div className="p-4">
-                        <h3 className={`text-lg font-semibold mb-2 group-hover:text-blue-500 transition-colors ${isDark ? 'text-white' : 'text-gray-800'}`}>
+                      <div className="p-3">
+                        <h3 className={`text-lg font-semibold mb-1 group-hover:text-blue-500 transition-colors ${isDark ? 'text-white' : 'text-gray-800'}`} style={{ fontFamily: 'serif' }}>
                           {knot.name}
                         </h3>
-                        <p className={`${isDark ? 'text-gray-300' : 'text-gray-600'} text-sm mb-3`}>
+                        <p className={`${isDark ? 'text-gray-300' : 'text-gray-600'} text-sm`}>
                           {knot.description}
                         </p>
-                        <div className="flex justify-between items-center pt-1 border-t border-dashed border-gray-200 dark:border-gray-700 mt-1">
-                          <span className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                        <div className="flex justify-end items-center pt-1 mt-1">
+                          <span className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'} italic`}>
                             {formatRelativeTime(knot.lastModified)}
                           </span>
-                          <button 
-                            className={`p-1 rounded-full ${isDark ? 'hover:bg-gray-700' : 'hover:bg-gray-100'}`}
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setEditingKnot(knot);
-                              setShowEditModal(true);
-                            }}
-                          >
-                            <Edit size={14} className={isDark ? 'text-gray-400' : 'text-gray-500'} />
-                          </button>
                         </div>
                       </div>
                     </div>
@@ -319,7 +281,7 @@ function App() {
                 </div>
               ) : (
                 <div className={`text-center p-8 rounded-lg ${isDark ? 'bg-gray-800 text-gray-300' : 'bg-gray-100 text-gray-600'}`}>
-                  <p>You haven't created any visualizations yet. Click "Start Creating" to begin.</p>
+                  <p>You haven't created any visualizations yet. Click "Create New" to begin.</p>
                 </div>
               )}
             </div>
