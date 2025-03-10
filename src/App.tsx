@@ -129,10 +129,10 @@ function App() {
             </button>
             <button
               onClick={handleCreateNew}
-              className="flex items-center gap-1 py-1.5 px-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg hover:from-blue-700 hover:to-indigo-700 transition-all shadow-md hover:shadow-lg text-base font-medium"
+              className="flex items-center gap-1 py-1.5 pl-3 pr-3.5 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg hover:from-blue-700 hover:to-indigo-700 transition-all shadow-md hover:shadow-lg text-base font-medium"
             >
               <Plus size={18} />
-              <span>Create</span>
+              <span>New</span>
             </button>
           </div>
         </div>
@@ -256,7 +256,7 @@ function App() {
                         isDark 
                           ? 'bg-gray-800 hover:bg-gray-750 border-gray-700' 
                           : 'bg-white hover:bg-blue-50 border-gray-200'
-                      } rounded-xl shadow-md transition-all duration-200 overflow-hidden border hover:shadow-lg group-hover:scale-105 group cursor-pointer`}
+                      } rounded-xl shadow-md transition-all duration-200 overflow-hidden border hover:shadow-lg hover:scale-105 group cursor-pointer`}
                       onClick={() => selectKnot(knot.id)}
                     >
                       {/* Real Visualization Instead of Thumbnail */}
