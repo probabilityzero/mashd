@@ -69,14 +69,14 @@ function App() {
 
   return (
     <div className={`min-h-screen ${isDark ? 'dark bg-gray-900' : 'bg-gray-100'}`}>
-      <header className={`${isDark ? 'bg-gray-900 text-white' : 'bg-white'} shadow-sm h-12`}> {/* Reduced header height to h-12 (3rem which is roughly 5 units) */}
+      <header className={`${isDark ? 'bg-gray-800 text-white' : 'bg-white'} shadow-sm h-12`}> {/* Reduced header height to h-12 (3rem which is roughly 5 units) */}
         <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between h-full"> {/* Ensure full height for content */}
           <div className="flex items-center gap-4">
             <button
               onClick={toggleMenu}
               className={`p-1.5 ${isDark ? 'hover:bg-gray-700' : 'hover:bg-gray-100'} rounded-lg transition-colors`}
             >
-              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
             <h1 className="text-xl font-semibold text-center flex-1">Mash D</h1> {/* Centered App Name "Mash D" */}
           </div>

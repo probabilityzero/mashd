@@ -71,7 +71,7 @@ export const SideMenu: React.FC<SideMenuProps> = ({ onCreateNew, onCloseMenu }) 
 
           <button
             onClick={onCreateNew}
-            className="flex items-center justify-center gap-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors mb-6"
+            className="flex items-center justify-center gap-2 px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors mb-6"
           >
             <Plus size={20} />
             <span>Create New</span>
@@ -87,10 +87,10 @@ export const SideMenu: React.FC<SideMenuProps> = ({ onCreateNew, onCloseMenu }) 
                   selectedKnot === knot.id
                     ? isDark
                       ? 'bg-gray-700'
-                      : 'bg-blue-100'
+                      : 'bg-gray-200'
                     : isDark
-                    ? 'hover:bg-gray-700'
-                    : 'hover:bg-gray-200'
+                    ? 'hover:bg-gray-600'
+                    : 'hover:bg-gray-100'
                 }`}
               >
                 <button
@@ -112,7 +112,7 @@ export const SideMenu: React.FC<SideMenuProps> = ({ onCreateNew, onCloseMenu }) 
                 </div>
 
                 {popoverKnotId === knot.id && (
-                  <div ref={popoverRef} className={`absolute right-0 top-full w-48 rounded-md shadow-lg ${isDark ? 'bg-gray-700' : 'bg-white'} ring-1 ring-black ring-opacity-5 focus:outline-none z-10`}>
+                  <div ref={popoverRef} className={`absolute border right-0 top-full w-48 rounded-md shadow-lg ${isDark ? 'bg-gray-700 hover:bg-gray-400' : 'bg-white hover:bg-gray-100'} focus:outline-none z-10`}>
                     <div className="" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
                       <button
                         onClick={() => { setEditingKnot(knot); closePopover(); }}
