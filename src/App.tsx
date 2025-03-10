@@ -31,8 +31,16 @@ function App() {
     const [activeTab, setActiveTab] = useState<'input' | 'code' | 'latex' | 'mathjax'>('code'); // Default to 'code'
     const currentKnot = knots.find(k => k.id === selectedKnot);
     const [editingKnot, setEditingKnot] = useState<KnotDefinition | undefined>(selectedKnotData()); // Call as a function
-    const [hoverPosition, setHoverPosition] = useState({ x: 0, y: 0, isHovering: false, elementId: '' });
-    const [headerHoverPosition, setHeaderHoverPosition] = useState({ x: 0, y: 0, isHeaderHovering: false, elementId: '' }); // Header-specific hover state
+    
+    // FIX: Improved hover state management
+    const [hoverState, setHoverState] = useState({
+        element: '',
+        isHovering: false,
+        x: 0,
+        y: 0,
+        width: 0,
+        height: 0
+    });
 
 
     // Effect to set theme based on system preference on initial load
@@ -111,30 +119,40 @@ function App() {
         setEditingKnot(selectedKnotData());
     }, [selectedKnotData]);
 
+    // FIX: Consolidated hover handlers for consistency
+    const handleMouseEnter = (e: React.MouseEvent, id: string) => {
+        const rect = e.currentTarget.getBoundingClientRect();
+        setHoverState({
+            element: id,
+            isHovering: true,
+            x: 0,
+            y: 0,
+            width: rect.width,
+            height: rect.height
+        });
+    };
+
     const handleMouseMove = (e: React.MouseEvent, id: string) => {
+        if (hoverState.element !== id) return;
+        
         const rect = e.currentTarget.getBoundingClientRect();
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
-        setHoverPosition({ x, y, isHovering: true, elementId: id });
+        
+        setHoverState(prev => ({
+            ...prev,
+            x,
+            y
+        }));
     };
 
-    const handleMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
-        setHoverPosition(prev => { return { ...prev, isHovering: false } });
-    };
-
-
-    // Header-specific hover handlers - CORRECTED
-    const handleHeaderMouseMove = (e: React.MouseEvent, id: string) => {
-        const rect = e.currentTarget.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        setHeaderHoverPosition({ x, y, isHeaderHovering: true, elementId: id }); // Set the elementId here
-    };
-
-    const handleHeaderMouseLeave = (id: string) => { //  Take 'id' as a parameter
-      setHeaderHoverPosition(prev =>
-        prev.elementId === id ? { ...prev, isHeaderHovering: false } : prev
-      );
+    const handleMouseLeave = (id: string) => {
+        if (hoverState.element === id) {
+            setHoverState(prev => ({
+                ...prev,
+                isHovering: false
+            }));
+        }
     };
 
     const formatRelativeTime = (timestamp: number) => {
@@ -152,11 +170,25 @@ function App() {
             return `${days} day${days > 1 ? 's' : ''} ago`;
         }
     };
-    const renderVisualization = (code: string) => {
+    
+    // FIX: Helper function for rendering glow effect
+    const renderGlowEffect = (elementId: string) => {
+        const isActive = hoverState.isHovering && hoverState.element === elementId;
+        const glowSize = 100; // Base glow size
+        
         return (
-            <div className="w-full h-full">
-                <Visualisation code={code} isDark={isDark} />
-            </div>
+            <div
+                className={`absolute rounded-full pointer-events-none filter blur-xl transition-opacity duration-300 ${isDark ? 'bg-blue-500' : 'bg-blue-400'}`}
+                style={{
+                    width: `${glowSize}px`,
+                    height: `${glowSize}px`,
+                    left: `${hoverState.x - glowSize/2}px`,
+                    top: `${hoverState.y - glowSize/2}px`,
+                    opacity: isActive ? 0.5 : 0,
+                    transform: 'translate(0, 0)',
+                    zIndex: 0,
+                }}
+            />
         );
     };
 
@@ -168,47 +200,26 @@ function App() {
                         <button
                             onClick={toggleMenu}
                             className={`p-1.5 relative ${isDark ? 'hover:bg-gray-700' : 'hover:bg-gray-100'} rounded-lg transition-colors`}
-                            onMouseMove={(e) => handleHeaderMouseMove(e, 'menu-button')}
-                            onMouseLeave={() => handleHeaderMouseLeave('menu-button')} // Pass the ID
+                            onMouseEnter={(e) => handleMouseEnter(e, 'menu-button')}
+                            onMouseMove={(e) => handleMouseMove(e, 'menu-button')}
+                            onMouseLeave={() => handleMouseLeave('menu-button')}
                         >
-                            {/* Header Glow Effect - CORRECTED */}
-                            {headerHoverPosition.isHeaderHovering && headerHoverPosition.elementId === 'menu-button' && (
-                                <div
-                                    className={`absolute rounded-full pointer-events-none filter blur-xl transition-opacity duration-500 opacity-50 ${isDark ? 'bg-blue-500' : 'bg-blue-400'}`}
-                                    style={{
-                                        width: '50px',
-                                        height: '50px',
-                                        left: headerHoverPosition.x - 25,
-                                        top: headerHoverPosition.y - 25,
-                                        zIndex: 0,
-                                    }}
-                                />
-                            )}
-                            <span style={{ position: 'relative', zIndex: 1 }}>
+                            {/* FIX: Consistent glow effect for header buttons */}
+                            {renderGlowEffect('menu-button')}
+                            <span className="relative z-10">
                                 {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
                             </span>
                         </button>
                         <h1
                             className="text-xl font-semibold md:font-bold cursor-pointer hover:opacity-80 transition-opacity relative"
                             onClick={handleGoHome}
-                            onMouseMove={(e) => handleHeaderMouseMove(e, 'logo')}
-                            onMouseLeave={() => handleHeaderMouseLeave('logo')} // Pass the ID
-
+                            onMouseEnter={(e) => handleMouseEnter(e, 'logo')}
+                            onMouseMove={(e) => handleMouseMove(e, 'logo')}
+                            onMouseLeave={() => handleMouseLeave('logo')}
                         >
-                            {/* Header Glow for Logo - CORRECTED */}
-                            {headerHoverPosition.isHeaderHovering && headerHoverPosition.elementId === 'logo' && (
-                                <div
-                                    className={`absolute rounded-full pointer-events-none filter blur-xl transition-opacity duration-500 opacity-50 ${isDark ? 'bg-blue-500' : 'bg-blue-400'}`}
-                                    style={{
-                                        width: '50px',
-                                        height: '50px',
-                                        left: headerHoverPosition.x - 25,
-                                        top: headerHoverPosition.y - 25,
-                                        zIndex: 0,
-                                    }}
-                                />
-                            )}
-                            <span style={{ position: 'relative', zIndex: 1 }}>
+                            {/* FIX: Consistent glow effect for logo */}
+                            {renderGlowEffect('logo')}
+                            <span className="relative z-10">
                                 Mash<span className="font-serif font-medium md:font-semibold">(d)</span>
                             </span>
                         </h1>
@@ -218,24 +229,13 @@ function App() {
                             <button
                                 onClick={() => setShowEditModal(true)}
                                 className={`text-sm md:text-lg font-medium relative ${isDark ? 'text-gray-200 hover:text-white' : 'text-gray-700 hover:text-gray-900'} flex items-center gap-1 font-serif`}
-                                onMouseMove={(e) => handleHeaderMouseMove(e, 'edit-button')}
-                                onMouseLeave={() => handleHeaderMouseLeave('edit-button')} // Pass the ID
+                                onMouseEnter={(e) => handleMouseEnter(e, 'edit-button')}
+                                onMouseMove={(e) => handleMouseMove(e, 'edit-button')}
+                                onMouseLeave={() => handleMouseLeave('edit-button')}
                             >
-
-                                {/* Header Glow for Edit - CORRECTED */}
-                                {headerHoverPosition.isHeaderHovering && headerHoverPosition.elementId === 'edit-button' && (
-                                    <div
-                                        className={`absolute rounded-full pointer-events-none filter blur-xl transition-opacity duration-500 opacity-50 ${isDark ? 'bg-blue-500' : 'bg-blue-400'}`}
-                                        style={{
-                                            width: '50px',
-                                            height: '50px',
-                                            left: headerHoverPosition.x - 25,
-                                            top: headerHoverPosition.y - 25,
-                                            zIndex: 0,
-                                        }}
-                                    />
-                                )}
-                                <span style={{ position: 'relative', zIndex: 1 }}>
+                                {/* FIX: Consistent glow effect for edit button */}
+                                {renderGlowEffect('edit-button')}
+                                <span className="relative z-10">
                                     {currentKnot.name}
                                     <Pencil size={14} className="pl-1" />
                                 </span>
@@ -247,46 +247,37 @@ function App() {
                             onClick={toggleTheme}
                             className={`p-2 relative ${isDark ? 'hover:bg-gray-700' : 'hover:bg-gray-100'} rounded-full transition-colors`}
                             title="Toggle theme"
-                            onMouseMove={(e) => handleHeaderMouseMove(e, 'theme-button')}
-                            onMouseLeave={() => handleHeaderMouseLeave('theme-button')} // Pass the ID
+                            onMouseEnter={(e) => handleMouseEnter(e, 'theme-button')}
+                            onMouseMove={(e) => handleMouseMove(e, 'theme-button')}
+                            onMouseLeave={() => handleMouseLeave('theme-button')}
                         >
-                            {/* Header Glow for Theme Toggle - CORRECTED */}
-                            {headerHoverPosition.isHeaderHovering && headerHoverPosition.elementId === 'theme-button' && (
-                                <div
-                                    className={`absolute rounded-full pointer-events-none filter blur-xl transition-opacity duration-500 opacity-50 ${isDark ? 'bg-blue-500' : 'bg-blue-400'}`}
-                                    style={{
-                                        width: '50px',
-                                        height: '50px',
-                                        left: headerHoverPosition.x - 25,
-                                        top: headerHoverPosition.y - 25,
-                                        zIndex: 0,
-                                    }}
-                                />
-                            )}
-                            <span style={{ position: 'relative', zIndex: 1 }}>
+                            {/* FIX: Consistent glow effect for theme button */}
+                            {renderGlowEffect('theme-button')}
+                            <span className="relative z-10">
                                 {isDark ? <Sun size={18} /> : <Moon size={18} />}
                             </span>
                         </button>
                         <button
                             onClick={handleCreateNew}
                             className="flex items-center p-1 relative bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-full hover:from-blue-700 hover:to-indigo-700 transition-all shadow-md hover:shadow-lg text-base font-medium"
-                            onMouseMove={(e) => handleHeaderMouseMove(e, 'new-button')}
-                            onMouseLeave={() => handleHeaderMouseLeave('new-button')} // Pass the ID
+                            onMouseEnter={(e) => handleMouseEnter(e, 'new-button')}
+                            onMouseMove={(e) => handleMouseMove(e, 'new-button')}
+                            onMouseLeave={() => handleMouseLeave('new-button')}
                         >
-                            {/* Header Glow for Create New - CORRECTED */}
-                            {headerHoverPosition.isHeaderHovering && headerHoverPosition.elementId === 'new-button' && (
-                                <div
-                                    className={`absolute rounded-full pointer-events-none filter blur-xl transition-opacity duration-500 opacity-50 ${isDark ? 'bg-purple-600' : 'bg-purple-400'}`} // Different color for contrast
-                                    style={{
-                                        width: '50px',
-                                        height: '50px',
-                                        left: headerHoverPosition.x - 25,
-                                        top: headerHoverPosition.y - 25,
-                                        zIndex: 0,
-                                    }}
-                                />
-                            )}
-                            <span style={{ position: 'relative', zIndex: 1 }}>
+                            {/* FIX: Special glow effect for create new button with different color */}
+                            <div
+                                className={`absolute rounded-full pointer-events-none filter blur-xl transition-opacity duration-300 ${isDark ? 'bg-purple-600' : 'bg-purple-400'}`}
+                                style={{
+                                    width: '100px',
+                                    height: '100px',
+                                    left: `${hoverState.x - 50}px`,
+                                    top: `${hoverState.y - 50}px`,
+                                    opacity: hoverState.isHovering && hoverState.element === 'new-button' ? 0.5 : 0,
+                                    transform: 'translate(0, 0)',
+                                    zIndex: 0,
+                                }}
+                            />
+                            <span className="relative z-10">
                                 <PlusCircle size={18} />
                             </span>
                         </button>
@@ -338,7 +329,6 @@ function App() {
                                             <CodeEditor
                                                 code={currentKnot.code}
                                                 onChange={(newCode) => updateKnot(currentKnot.id, { code: newCode })}
-                                            //Removed isDark
                                             />
                                         )}
                                         {activeTab === 'latex' && (
@@ -361,7 +351,7 @@ function App() {
                         <div
                             className={`relative ${isDark ? 'bg-gradient-to-br from-gray-800 to-gray-900' : 'bg-gradient-to-br from-white to-blue-50'
                                 } rounded-xl shadow-xl p-8 py-14 text-center border ${isDark ? 'border-gray-700' : 'border-blue-100'
-                                } overflow-hidden`} // Added overflow-hidden
+                                } overflow-hidden`}
                             style={{
                                 marginTop: '2rem',
                                 minHeight: '320px',
@@ -370,15 +360,20 @@ function App() {
                                 justifyContent: 'center',
                                 alignItems: 'center'
                             }}
+                            onMouseEnter={(e) => handleMouseEnter(e, 'hero')}
+                            onMouseMove={(e) => handleMouseMove(e, 'hero')}
+                            onMouseLeave={() => handleMouseLeave('hero')}
                         >
-                            {/* Glow Effect */}
+                            {/* FIX: Improved hero section glow effect */}
                             <div
-                                className="absolute inset-0 pointer-events-none  filter blur-3xl opacity-0 transition-opacity duration-500 bg-gradient-to-r from-blue-400 to-purple-300"
-                                style={{ opacity: hoverPosition.isHovering ? 0.5 : 0 }} //added dynamic opcaity
+                                className={`absolute inset-0 pointer-events-none filter blur-3xl transition-opacity duration-300 bg-gradient-to-r from-blue-400 to-purple-300`}
+                                style={{ 
+                                    opacity: hoverState.isHovering && hoverState.element === 'hero' ? 0.5 : 0
+                                }}
                             />
 
                             {/* Hero Section Content */}
-                            <div className="max-w-3xl mx-auto" onMouseMove={(e) => handleMouseMove(e, 'hero')} onMouseLeave={handleMouseLeave}>
+                            <div className="max-w-3xl mx-auto relative z-10">
                                 <div className="mb-3">
                                     <span className={`inline-block px-3 py-1 text-sm rounded-full ${isDark ? 'bg-blue-900 text-blue-200' : 'bg-blue-100 text-blue-800'
                                         }`}>
@@ -417,21 +412,20 @@ function App() {
                                                 : 'bg-white hover:bg-blue-50 border-gray-200'
                                                 } rounded-xl shadow-md transition-all duration-200 overflow-hidden border hover:shadow-lg group cursor-pointer relative`}
                                             onClick={() => selectKnot(knot.id)}
+                                            onMouseEnter={(e) => handleMouseEnter(e, knot.id)}
                                             onMouseMove={(e) => handleMouseMove(e, knot.id)}
-                                            onMouseLeave={handleMouseLeave}
+                                            onMouseLeave={() => handleMouseLeave(knot.id)}
                                         >
-                                            {/* Glow effect */}
+                                            {/* FIX: Improved glow effect for knot cards */}
                                             <div
-                                                className={`absolute rounded-full pointer-events-none filter blur-xl transition-opacity duration-500  ${isDark ? 'bg-blue-500' : 'bg-blue-400'}`}
+                                                className={`absolute rounded-full pointer-events-none filter blur-xl transition-opacity duration-300 ${isDark ? 'bg-blue-500' : 'bg-blue-400'}`}
                                                 style={{
                                                     width: '150px',
                                                     height: '150px',
-                                                    left: hoverPosition.x - 75,
-                                                    top: hoverPosition.y - 75,
-                                                    transform: 'translate(0, 0)',
+                                                    left: `${hoverState.x - 75}px`,
+                                                    top: `${hoverState.y - 75}px`,
+                                                    opacity: hoverState.isHovering && hoverState.element === knot.id ? 0.5 : 0,
                                                     zIndex: 1,
-                                                    opacity: hoverPosition.isHovering && hoverPosition.elementId === knot.id ? 0.5 : 0,
-
                                                 }}
                                             />
 
