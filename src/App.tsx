@@ -69,8 +69,8 @@ function App() {
 
   return (
     <div className={`min-h-screen ${isDark ? 'dark bg-gray-900' : 'bg-gray-100'}`}>
-      <header className={`${isDark ? 'bg-gray-800 text-white' : 'bg-white'} shadow-sm h-12`}> {/* Reduced header height to h-12 (3rem which is roughly 5 units) */}
-        <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between h-full"> {/* Ensure full height for content */}
+      <header className={`${isDark ? 'bg-gray-900 text-white' : 'bg-white'} shadow-sm h-12`}> {/* Reduced header height to h-12 (3rem which is roughly 5 units) */}
+        <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between h-full"> {/* Ensure full height for content */}
           <div className="flex items-center gap-4">
             <button
               onClick={toggleMenu}
@@ -78,7 +78,7 @@ function App() {
             >
               {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
-            <h1 className="text-2xl font-semibold text-center flex-1">Mash D</h1> {/* Centered App Name "Mash D" */}
+            <h1 className="text-xl font-semibold text-center flex-1">Mash D</h1> {/* Centered App Name "Mash D" */}
           </div>
           {currentKnot && (
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"> {/* Centering the knot name */}
@@ -108,13 +108,13 @@ function App() {
             <div className="flex">
               <div className="flex flex-col w-full"> {/* Ensure column takes full width */}
                 <div className={`${isDark ? 'bg-gray-800' : 'bg-white'} rounded-lg shadow-md overflow-hidden mt-2`}> {/* Border and margin container */}
-                  <div className="flex p-1 justify-between items-center border-b border-gray-300 dark:border-gray-700"> {/* Border for the nav area */}
+                  <div className="flex p-1 justify-between items-center border-b border-gray-100 dark:border-gray-800"> {/* Border for the nav area */}
                     <div className="flex"> {/* Container for tabs to keep them left-aligned */}
                       {(['input', 'code', 'latex', 'mathjax'] as const).map((tab) => (
                         <button
                           key={tab}
                           onClick={() => setActiveTab(tab)}
-                          className={`px-3 py-1 capitalize gap-1 text-sm rounded-full transition-colors ${ // Rounded-full for pill shape
+                          className={`px-3 py-1 capitalize space-x-1 text-sm rounded-full transition-colors ${ // Rounded-full for pill shape
                             activeTab === tab
                               ? isDark
                                 ? 'bg-gray-700 text-white'
