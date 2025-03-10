@@ -227,10 +227,10 @@ function App() {
                   </span>
                 </div>
                 <h2 className={`text-4xl font-bold mb-5 ${isDark ? 'text-white' : 'text-gray-900'}`}>
-                  Create Your Mathematical Visualization
+                  Create Your Mathematical Visualization Using Mash D
                 </h2>
                 <p className={`text-xl mb-8 ${isDark ? 'text-gray-300' : 'text-gray-600'} max-w-2xl mx-auto`}>
-                  Bring mathematics to life with interactive 3D visualizations that help you explore complex concepts in a visual way.
+                  Bring geometry and topology to life with interactive 3D visualizations that help you explore complex concepts in a visual way.
                 </p>
                 <button
                   onClick={handleCreateNew}

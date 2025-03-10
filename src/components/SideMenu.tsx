@@ -71,7 +71,7 @@ export const SideMenu: React.FC<SideMenuProps> = ({ onCreateNew, onCloseMenu }) 
 
           <button
             onClick={onCreateNew}
-            className={`flex items-center justify-center gap-2 px-4 py-2 rounded-lg transition-colors mb-6 ${
+            className={`flex items-center font-medium justify-center gap-2 px-4 py-2 rounded-lg transition-colors mb-6 ${
               isDark 
                 ? 'bg-blue-600 hover:bg-blue-700 text-white' 
                 : 'bg-blue-500 hover:bg-blue-600 text-white'
@@ -87,7 +87,7 @@ export const SideMenu: React.FC<SideMenuProps> = ({ onCreateNew, onCloseMenu }) 
               <div
                 key={knot.id}
                 ref={(el) => (knotItemRef.current[index] = el as HTMLElement)}
-                className={`relative group p-3 py-1.5 rounded-lg transition-colors ${
+                className={`relative group rounded-lg transition-colors ${
                   selectedKnot === knot.id
                     ? isDark
                       ? 'bg-gray-700'
@@ -101,7 +101,7 @@ export const SideMenu: React.FC<SideMenuProps> = ({ onCreateNew, onCloseMenu }) 
                   onClick={() => selectKnot(knot.id)}
                   className="w-full text-left"
                 >
-                  <h3 className={`font-normal ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                  <h3 className={`font-normal p-3 py-1.5 ${isDark ? 'text-white' : 'text-gray-900'}`}>
                     {knot.name}
                   </h3>
                 </button>
