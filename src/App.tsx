@@ -148,13 +148,13 @@ function App() {
       <main className="container mx-auto p-3 md:p-6">
         {currentKnot ? (
           <div className="space-y-3 md:space-y-6">
-            <div className={`${isDark ? 'bg-gray-800' : 'bg-white'} rounded-lg shadow-lg overflow-hidden`} style={{ height: '640px' }}>
+            <div className={`${isDark ? 'bg-gray-800' : 'bg-white'} h-[600px] md:h-[640px] rounded-lg shadow-lg overflow-hidden`}>
               <Visualisation code={currentKnot.code} isDark={isDark} editingKnot={editingKnot} onDeleteKnot={handleDeleteKnot} onDownloadKnot={handleDownload} setShowEditModal={setShowEditModal} />
             </div>
 
             <div className="flex">
               <div className="flex flex-col w-full">
-                <div className={`${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} rounded-lg shadow-lg overflow-hidden mt-2 border`}>
+                <div className={`${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} rounded-lg shadow-lg overflow-hidden border`}>
                   <div className={`flex p-1.5 justify-between items-center border-b border-gray-300 dark:border-gray-700 bg-gradient-to-r ${isDark ? 'to-gray-900 from-gray-800' : 'from-blue-100 to-blue-200'}`}>
                     <div className="flex space-x-1">
                       {(['input', 'code', 'latex', 'mathjax'] as const).map((tab) => (
