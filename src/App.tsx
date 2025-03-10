@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Visualisation } from './components/Visualisation';
 import { CodeEditor } from './components/CodeEditor';
 import { SideMenu } from './components/SideMenu';
@@ -8,14 +8,32 @@ import { Menu, X, Moon, Plus, Sun, Pencil, PlusCircle } from 'lucide-react';
 import { useTheme } from './store/themeStore';
 import { KnotDefinition } from './types/knot';
 
+// --- KnotPreview Component ---
+interface KnotPreviewProps {
+    code: string;
+    isDark: boolean;
+}
+
+const KnotPreview: React.FC<KnotPreviewProps> = ({ code, isDark }) => {
+    return (
+        <div className="h-36 w-full overflow-hidden relative pointer-events-none z-10">
+            <Visualisation code={code} isDark={isDark} editingKnot={undefined} onDeleteKnot={() => { }} onDownloadKnot={() => { }} setShowEditModal={() => { }} />
+        </div>
+    );
+};
+// --- End KnotPreview Component ---
+
+
 function App() {
     const { knots, selectedKnot, isMenuOpen, toggleMenu, addKnot, updateKnot, deleteKnot, selectedKnotData, selectKnot } = useKnotStore();
     const { isDark, toggleTheme, setThemeBasedOnSystem } = useTheme();
     const [showEditModal, setShowEditModal] = useState(false);
     const [activeTab, setActiveTab] = useState<'input' | 'code' | 'latex' | 'mathjax'>('code'); // Default to 'code'
     const currentKnot = knots.find(k => k.id === selectedKnot);
-    const [editingKnot, setEditingKnot] = useState<KnotDefinition | undefined>(selectedKnotData);
+    const [editingKnot, setEditingKnot] = useState<KnotDefinition | undefined>(selectedKnotData()); // Call as a function
     const [hoverPosition, setHoverPosition] = useState({ x: 0, y: 0, isHovering: false, elementId: '' });
+    const [headerHoverPosition, setHeaderHoverPosition] = useState({ x: 0, y: 0, isHeaderHovering: false, elementId: '' }); // Header-specific hover state
+
 
     // Effect to set theme based on system preference on initial load
     useEffect(() => {
@@ -24,7 +42,7 @@ function App() {
 
         // Add listener for system theme changes
         const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-        const handleChange = (e) => {
+        const handleChange = (e: MediaQueryListEvent) => {
             setThemeBasedOnSystem(e.matches);
         };
 
@@ -32,14 +50,13 @@ function App() {
         return () => mediaQuery.removeEventListener('change', handleChange);
     }, [setThemeBasedOnSystem]);
 
-    const handleClickOutside = (e: React.MouseEvent) => {
+    const handleClickOutside = (e: React.MouseEvent<HTMLDivElement>) => {
         if (isMenuOpen && e.target === e.currentTarget) {
             toggleMenu();
         }
     };
 
     const handleCreateNew = () => {
-        // Find highest number in existing "My Visualization X" names
         let highestNum = 0;
         knots.forEach(knot => {
             const match = knot.name.match(/My Visualization (\d+)/);
@@ -85,50 +102,56 @@ function App() {
     const handleDeleteKnot = (knotId: string | undefined) => {
         if (!knotId) return;
         deleteKnot(knotId);
-        // Select the first knot after deletion if knots are still available
         if (knots.length > 1) {
             selectKnot(knots[0].id);
         }
     };
 
     useEffect(() => {
-        setEditingKnot(selectedKnotData);
+        setEditingKnot(selectedKnotData());
     }, [selectedKnotData]);
 
-    // Mouse hover tracking for gradient effect
-    const handleMouseMove = (e, id) => {
+    const handleMouseMove = (e: React.MouseEvent, id: string) => {
         const rect = e.currentTarget.getBoundingClientRect();
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
         setHoverPosition({ x, y, isHovering: true, elementId: id });
     };
 
-    const handleMouseLeave = (e, id) => { // Added 'id' parameter
-      // Only reset if the mouse is leaving *this* element
-        setHoverPosition(prev => prev.elementId === id ? { ...prev, isHovering: false } : prev);
+    const handleMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
+        setHoverPosition(prev => { return { ...prev, isHovering: false } });
     };
 
-    // Function to format the lastModified date to relative time
+
+    // Header-specific hover handlers - CORRECTED
+    const handleHeaderMouseMove = (e: React.MouseEvent, id: string) => {
+        const rect = e.currentTarget.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        setHeaderHoverPosition({ x, y, isHeaderHovering: true, elementId: id }); // Set the elementId here
+    };
+
+    const handleHeaderMouseLeave = (id: string) => { //  Take 'id' as a parameter
+      setHeaderHoverPosition(prev =>
+        prev.elementId === id ? { ...prev, isHeaderHovering: false } : prev
+      );
+    };
+
     const formatRelativeTime = (timestamp: number) => {
         const now = Date.now();
         const diff = now - timestamp;
 
-        // Less than 24 hours
         if (diff < 24 * 60 * 60 * 1000) {
             return "Today";
         }
-        // Less than 48 hours
         else if (diff < 48 * 60 * 60 * 1000) {
             return "Yesterday";
         }
-        // Otherwise show days ago
         else {
             const days = Math.floor(diff / (24 * 60 * 60 * 1000));
             return `${days} day${days > 1 ? 's' : ''} ago`;
         }
     };
-
-    // Use actual visualization instead of the thumbnail preview
     const renderVisualization = (code: string) => {
         return (
             <div className="w-full h-full">
@@ -144,42 +167,128 @@ function App() {
                     <div className="flex items-center gap-2">
                         <button
                             onClick={toggleMenu}
-                            className={`p-1.5 ${isDark ? 'hover:bg-gray-700' : 'hover:bg-gray-100'} rounded-lg transition-colors`}
+                            className={`p-1.5 relative ${isDark ? 'hover:bg-gray-700' : 'hover:bg-gray-100'} rounded-lg transition-colors`}
+                            onMouseMove={(e) => handleHeaderMouseMove(e, 'menu-button')}
+                            onMouseLeave={() => handleHeaderMouseLeave('menu-button')} // Pass the ID
                         >
-                            {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
+                            {/* Header Glow Effect - CORRECTED */}
+                            {headerHoverPosition.isHeaderHovering && headerHoverPosition.elementId === 'menu-button' && (
+                                <div
+                                    className={`absolute rounded-full pointer-events-none filter blur-xl transition-opacity duration-500 opacity-50 ${isDark ? 'bg-blue-500' : 'bg-blue-400'}`}
+                                    style={{
+                                        width: '50px',
+                                        height: '50px',
+                                        left: headerHoverPosition.x - 25,
+                                        top: headerHoverPosition.y - 25,
+                                        zIndex: 0,
+                                    }}
+                                />
+                            )}
+                            <span style={{ position: 'relative', zIndex: 1 }}>
+                                {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
+                            </span>
                         </button>
                         <h1
-                            className="text-xl font-semibold md:font-bold cursor-pointer hover:opacity-80 transition-opacity"
+                            className="text-xl font-semibold md:font-bold cursor-pointer hover:opacity-80 transition-opacity relative"
                             onClick={handleGoHome}
+                            onMouseMove={(e) => handleHeaderMouseMove(e, 'logo')}
+                            onMouseLeave={() => handleHeaderMouseLeave('logo')} // Pass the ID
+
                         >
-                            Mash<span className="font-serif font-medium md:font-semibold">(d)</span>
+                            {/* Header Glow for Logo - CORRECTED */}
+                            {headerHoverPosition.isHeaderHovering && headerHoverPosition.elementId === 'logo' && (
+                                <div
+                                    className={`absolute rounded-full pointer-events-none filter blur-xl transition-opacity duration-500 opacity-50 ${isDark ? 'bg-blue-500' : 'bg-blue-400'}`}
+                                    style={{
+                                        width: '50px',
+                                        height: '50px',
+                                        left: headerHoverPosition.x - 25,
+                                        top: headerHoverPosition.y - 25,
+                                        zIndex: 0,
+                                    }}
+                                />
+                            )}
+                            <span style={{ position: 'relative', zIndex: 1 }}>
+                                Mash<span className="font-serif font-medium md:font-semibold">(d)</span>
+                            </span>
                         </h1>
                     </div>
                     {currentKnot && (
                         <div className="absolute left-1/2 transform -translate-x-1/2 flex items-center">
                             <button
                                 onClick={() => setShowEditModal(true)}
-                                className={`text-sm md:text-lg font-medium ${isDark ? 'text-gray-200 hover:text-white' : 'text-gray-700 hover:text-gray-900'} flex items-center gap-1 font-serif`}
+                                className={`text-sm md:text-lg font-medium relative ${isDark ? 'text-gray-200 hover:text-white' : 'text-gray-700 hover:text-gray-900'} flex items-center gap-1 font-serif`}
+                                onMouseMove={(e) => handleHeaderMouseMove(e, 'edit-button')}
+                                onMouseLeave={() => handleHeaderMouseLeave('edit-button')} // Pass the ID
                             >
-                                {currentKnot.name}
-                                <Pencil size={14} className="pl-1" />
+
+                                {/* Header Glow for Edit - CORRECTED */}
+                                {headerHoverPosition.isHeaderHovering && headerHoverPosition.elementId === 'edit-button' && (
+                                    <div
+                                        className={`absolute rounded-full pointer-events-none filter blur-xl transition-opacity duration-500 opacity-50 ${isDark ? 'bg-blue-500' : 'bg-blue-400'}`}
+                                        style={{
+                                            width: '50px',
+                                            height: '50px',
+                                            left: headerHoverPosition.x - 25,
+                                            top: headerHoverPosition.y - 25,
+                                            zIndex: 0,
+                                        }}
+                                    />
+                                )}
+                                <span style={{ position: 'relative', zIndex: 1 }}>
+                                    {currentKnot.name}
+                                    <Pencil size={14} className="pl-1" />
+                                </span>
                             </button>
                         </div>
                     )}
                     <div className="flex items-center gap-2">
                         <button
                             onClick={toggleTheme}
-                            className={`p-2 ${isDark ? 'hover:bg-gray-700' : 'hover:bg-gray-100'} rounded-full transition-colors`}
+                            className={`p-2 relative ${isDark ? 'hover:bg-gray-700' : 'hover:bg-gray-100'} rounded-full transition-colors`}
                             title="Toggle theme"
+                            onMouseMove={(e) => handleHeaderMouseMove(e, 'theme-button')}
+                            onMouseLeave={() => handleHeaderMouseLeave('theme-button')} // Pass the ID
                         >
-                            {isDark ? <Sun size={18} /> : <Moon size={18} />}
+                            {/* Header Glow for Theme Toggle - CORRECTED */}
+                            {headerHoverPosition.isHeaderHovering && headerHoverPosition.elementId === 'theme-button' && (
+                                <div
+                                    className={`absolute rounded-full pointer-events-none filter blur-xl transition-opacity duration-500 opacity-50 ${isDark ? 'bg-blue-500' : 'bg-blue-400'}`}
+                                    style={{
+                                        width: '50px',
+                                        height: '50px',
+                                        left: headerHoverPosition.x - 25,
+                                        top: headerHoverPosition.y - 25,
+                                        zIndex: 0,
+                                    }}
+                                />
+                            )}
+                            <span style={{ position: 'relative', zIndex: 1 }}>
+                                {isDark ? <Sun size={18} /> : <Moon size={18} />}
+                            </span>
                         </button>
                         <button
                             onClick={handleCreateNew}
-                            className="flex items-center p-1 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-full hover:from-blue-700 hover:to-indigo-700 transition-all shadow-md hover:shadow-lg text-base font-medium"
+                            className="flex items-center p-1 relative bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-full hover:from-blue-700 hover:to-indigo-700 transition-all shadow-md hover:shadow-lg text-base font-medium"
+                            onMouseMove={(e) => handleHeaderMouseMove(e, 'new-button')}
+                            onMouseLeave={() => handleHeaderMouseLeave('new-button')} // Pass the ID
                         >
-                            <PlusCircle size={18} />
-                            {/* <span>New</span> */}
+                            {/* Header Glow for Create New - CORRECTED */}
+                            {headerHoverPosition.isHeaderHovering && headerHoverPosition.elementId === 'new-button' && (
+                                <div
+                                    className={`absolute rounded-full pointer-events-none filter blur-xl transition-opacity duration-500 opacity-50 ${isDark ? 'bg-purple-600' : 'bg-purple-400'}`} // Different color for contrast
+                                    style={{
+                                        width: '50px',
+                                        height: '50px',
+                                        left: headerHoverPosition.x - 25,
+                                        top: headerHoverPosition.y - 25,
+                                        zIndex: 0,
+                                    }}
+                                />
+                            )}
+                            <span style={{ position: 'relative', zIndex: 1 }}>
+                                <PlusCircle size={18} />
+                            </span>
                         </button>
                     </div>
                 </div>
@@ -229,7 +338,7 @@ function App() {
                                             <CodeEditor
                                                 code={currentKnot.code}
                                                 onChange={(newCode) => updateKnot(currentKnot.id, { code: newCode })}
-                                                isDark={isDark}
+                                            //Removed isDark
                                             />
                                         )}
                                         {activeTab === 'latex' && (
@@ -265,7 +374,7 @@ function App() {
                             {/* Glow Effect */}
                             <div
                                 className="absolute inset-0 pointer-events-none  filter blur-3xl opacity-0 transition-opacity duration-500 bg-gradient-to-r from-blue-400 to-purple-300"
-                                style={{opacity: hoverPosition.isHovering ? 0.5 : 0}} //added dynamic opcaity
+                                style={{ opacity: hoverPosition.isHovering ? 0.5 : 0 }} //added dynamic opcaity
                             />
 
                             {/* Hero Section Content */}
@@ -309,27 +418,26 @@ function App() {
                                                 } rounded-xl shadow-md transition-all duration-200 overflow-hidden border hover:shadow-lg group cursor-pointer relative`}
                                             onClick={() => selectKnot(knot.id)}
                                             onMouseMove={(e) => handleMouseMove(e, knot.id)}
-                                          onMouseLeave={(e) => handleMouseLeave(e, knot.id)} // Pass knot.id
+                                            onMouseLeave={handleMouseLeave}
                                         >
                                             {/* Glow effect */}
-                                             <div
+                                            <div
                                                 className={`absolute rounded-full pointer-events-none filter blur-xl transition-opacity duration-500  ${isDark ? 'bg-blue-500' : 'bg-blue-400'}`}
                                                 style={{
-                                                    width: '150px',  // Slightly reduced size
-                                                    height: '150px', // Slightly reduced size
-                                                    left: hoverPosition.x - 75, // Centering
-                                                    top: hoverPosition.y - 75,  // Centering
+                                                    width: '150px',
+                                                    height: '150px',
+                                                    left: hoverPosition.x - 75,
+                                                    top: hoverPosition.y - 75,
                                                     transform: 'translate(0, 0)',
                                                     zIndex: 1,
-                                                    opacity: hoverPosition.isHovering && hoverPosition.elementId === knot.id ? 0.5 : 0, // Conditionally set opacity
+                                                    opacity: hoverPosition.isHovering && hoverPosition.elementId === knot.id ? 0.5 : 0,
 
                                                 }}
                                             />
 
-                                            {/* Real Visualization Instead of Thumbnail */}
-                                            <div className="h-36 w-full overflow-hidden relative pointer-events-none z-10">
-                                                {renderVisualization(knot.code)}
-                                            </div>
+                                            {/* --- Use KnotPreview Here --- */}
+                                            <KnotPreview code={knot.code} isDark={isDark} />
+                                            {/* --- End KnotPreview --- */}
 
                                             {/* Text container */}
                                             <div className="relative z-10">
