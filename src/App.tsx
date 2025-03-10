@@ -145,10 +145,10 @@ function App() {
       {isMenuOpen && <div className="fixed inset-0 bg-black bg-opacity-50 z-40" onClick={handleClickOutside} />}
       <SideMenu onCreateNew={handleCreateNew} onCloseMenu={toggleMenu} />
 
-      <main className="container mx-auto px-3 md:px-6 py-3 md:py-6">
+      <main className="container mx-auto p-3 md:p-6">
         {currentKnot ? (
-          <div className="space-y-6">
-            <div className={`${isDark ? 'bg-gray-800' : 'bg-white'} rounded-lg shadow-lg overflow-hidden`} style={{ height: '600px' }}>
+          <div className="space-y-3 md:space-y-6">
+            <div className={`${isDark ? 'bg-gray-800' : 'bg-white'} rounded-lg shadow-lg overflow-hidden`} style={{ height: '640px' }}>
               <Visualisation code={currentKnot.code} isDark={isDark} editingKnot={editingKnot} onDeleteKnot={handleDeleteKnot} onDownloadKnot={handleDownload} setShowEditModal={setShowEditModal} />
             </div>
 
