@@ -1,9 +1,32 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+
 body {
-  font-family: 'Inter', 'sans', sans-serif;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont,  'Inter', 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+/* Smooth hover effect for the glow */
+.glow-effect-wrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Improved font rendering for serif titles */
+.font-serif {
+  text-rendering: optimizeLegibility;
 }

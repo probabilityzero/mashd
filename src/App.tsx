@@ -151,7 +151,7 @@ function App() {
               className="text-xl font-semibold md:font-bold cursor-pointer hover:opacity-80 transition-opacity"
               onClick={handleGoHome}
             >
-              Mash(d)
+                Mash<span className="font-serif">(d)</span>
             </h1>
           </div>
           {currentKnot && (
@@ -178,7 +178,7 @@ function App() {
               className="flex items-center py-1 px-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-full hover:from-blue-700 hover:to-indigo-700 transition-all shadow-md hover:shadow-lg text-base font-medium"
             >
               <PlusCircle size={18} className="mr-1" />
-              <span>New</span>
+              {/* <span>New</span> */}
             </button>
           </div>
         </div>
@@ -249,47 +249,54 @@ function App() {
           </div>
         ) : (
           <div className="space-y-10 max-w-6xl mx-auto">
-            <div 
-              className={`${
-                isDark ? 'bg-gradient-to-br from-gray-800 to-gray-900' : 'bg-gradient-to-br from-white to-blue-50'
-              } rounded-xl shadow-xl p-8 py-14 text-center border ${
-                isDark ? 'border-gray-700' : 'border-blue-100'
-              }`} 
-              style={{ 
-                marginTop: '2rem',
-                minHeight: '320px',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                alignItems: 'center'
-              }}
-            >
-              <div className="max-w-3xl mx-auto">
-                <div className="mb-2.5">
-                  <span className={`inline-block px-3 py-1 text-sm rounded-full ${
-                    isDark ? 'bg-blue-900 text-blue-200' : 'bg-blue-100 text-blue-800'
-                  }`}>
-                    Mathematical Visualization Tool
-                  </span>
-                </div>
-                <h2 className={`text-4xl font-bold mb-4 font-serif ${isDark ? 'text-white' : 'text-gray-900'}`}>
-                  Mash(d) for Mathematical Visualization
-                </h2>
-                <p className={`text-xl mb-8 ${isDark ? 'text-gray-300' : 'text-gray-600'} max-w-2xl mx-auto`}>
-                  Bring algebra, geometry and topology to life with interactive multi-dimension visualizations that help you explore complex concepts in a visual way.
-                </p>
-                <button
-                  onClick={handleCreateNew}
-                  className="flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-full hover:from-blue-700 hover:to-indigo-700 transition-all shadow-md hover:shadow-lg text-lg mx-auto font-medium"
-                >
-                  <PlusCircle size={24} />
-                  Create New
-                </button>
-              </div>
-            </div>
+<div 
+  className={`relative ${
+    isDark ? 'bg-gradient-to-br from-gray-800 to-gray-900' : 'bg-gradient-to-br from-white to-blue-50'
+  } rounded-xl shadow-xl p-8 py-14 text-center border ${
+    isDark ? 'border-gray-700' : 'border-blue-100'
+  }`} 
+  style={{ 
+    marginTop: '2rem',
+    minHeight: '320px',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center'
+  }}
+>
+  {/* Glow Effect */}
+  <div 
+    className="absolute inset-0 pointer-events-none z-[-1] filter blur-2xl opacity-50 bg-gradient-to-r from-blue-400 to-purple-300"
+  />
+  
+  {/* Hero Section Content */}
+  <div className="max-w-3xl mx-auto">
+    <div className="mb-3">
+      <span className={`inline-block px-3 py-1 text-sm rounded-full ${
+        isDark ? 'bg-blue-900 text-blue-200' : 'bg-blue-100 text-blue-800'
+      }`}>
+        Mathematical Visualization Tool
+      </span>
+    </div>
+    <h2 className={`text-4xl font-bold mb-4 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+      Mash<span className="font-serif">(d)</span> for Mathematical Visualization
+    </h2>
+    <p className={`text-xl mb-8 ${isDark ? 'text-gray-300' : 'text-gray-600'} max-w-2xl mx-auto`}>
+      Bring algebra, geometry and topology to life with interactive multi-dimension visualizations that help you explore complex concepts in a visual way.
+    </p>
+    <button
+      onClick={handleCreateNew}
+      className="flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg hover:from-blue-700 hover:to-indigo-700 transition-all shadow-md hover:shadow-lg text-lg mx-auto font-medium"
+    >
+      <PlusCircle size={24} />
+      Create New
+    </button>
+  </div>
+</div>
+
 
             <div className="mt-12">
-              <h3 className={`text-2xl font-bold mb-4 font-serif ${isDark ? 'text-white' : 'text-gray-900'} text-center`}>
+              <h3 className={`text-2xl font-bold mb-4 ${isDark ? 'text-white' : 'text-gray-900'} text-center`}>
                 Your Visualizations
               </h3>
               
@@ -310,10 +317,10 @@ function App() {
                       {/* Glow effect */}
                       {hoverPosition.isHovering && hoverPosition.elementId === knot.id && (
                         <div 
-                          className={`absolute rounded-full pointer-events-none filter blur-xl opacity-50 ${isDark ? 'bg-blue-600' : 'bg-blue-400'}`}
+                          className={`absolute rounded-full pointer-events-none filter blur-xl opacity-50 ${isDark ? 'bg-blue-500' : 'bg-blue-400'}`}
                           style={{
-                            width: '150px',
-                            height: '150px',
+                            width: '200px',
+                            height: '200px',
                             left: hoverPosition.x - 75,
                             top: hoverPosition.y - 75,
                             transform: 'translate(0, 0)',
