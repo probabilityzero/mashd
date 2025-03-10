@@ -74,7 +74,7 @@ function App() {
           <div className="flex items-center gap-4">
             <button
               onClick={toggleMenu}
-              className={`p-2 ${isDark ? 'hover:bg-gray-700' : 'hover:bg-gray-100'} rounded-lg transition-colors`}
+              className={`p-1.5 ${isDark ? 'hover:bg-gray-700' : 'hover:bg-gray-100'} rounded-lg transition-colors`}
             >
               {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>

@@ -89,7 +89,7 @@ export const SideMenu: React.FC<SideMenuProps> = ({ onCreateNew, onCloseMenu }) 
                       ? 'bg-gray-700'
                       : 'bg-blue-100'
                     : isDark
-                    ? 'hover:bg-gray-800'
+                    ? 'hover:bg-gray-700'
                     : 'hover:bg-gray-200'
                 }`}
               >
