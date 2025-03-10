@@ -4,7 +4,7 @@ import { CodeEditor } from './components/CodeEditor';
 import { SideMenu } from './components/SideMenu';
 import { EditModal } from './components/EditModal';
 import { useKnotStore } from './store/knotStore';
-import { Menu, X, Moon, Sun, Pencil, PlusCircle } from 'lucide-react';
+import { Menu, X, Moon, Plus, Sun, Pencil, PlusCircle } from 'lucide-react';
 import { useTheme } from './store/themeStore';
 import { KnotDefinition } from './types/knot';
 
@@ -151,7 +151,7 @@ function App() {
               className="text-xl font-semibold md:font-bold cursor-pointer hover:opacity-80 transition-opacity"
               onClick={handleGoHome}
             >
-                Mash<span className="font-serif">(d)</span>
+                Mash<span className="font-serif font-medium md:font-semibold">(d)</span>
             </h1>
           </div>
           {currentKnot && (
@@ -279,7 +279,7 @@ function App() {
       </span>
     </div>
     <h2 className={`text-4xl font-bold mb-4 ${isDark ? 'text-white' : 'text-gray-900'}`}>
-      Mash<span className="font-serif italic">(d)</span> for Mathematical Visualization
+      Mash<span className="font-serif font-semibold">(d)</span> for Mathematical Visualization
     </h2>
     <p className={`text-xl mb-8 ${isDark ? 'text-gray-300' : 'text-gray-600'} max-w-2xl mx-auto`}>
       Bring algebra, geometry and topology to life with interactive multi-dimension visualizations that help you explore complex concepts in a visual way.
@@ -288,7 +288,7 @@ function App() {
       onClick={handleCreateNew}
       className="flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg hover:from-blue-700 hover:to-indigo-700 transition-all shadow-md hover:shadow-lg text-lg mx-auto font-medium"
     >
-      <PlusCircle size={24} />
+      <Plus size={24} />
       Create New
     </button>
   </div>
