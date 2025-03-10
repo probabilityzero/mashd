@@ -150,13 +150,13 @@ function App() {
             <div className="flex">
               <div className="flex flex-col w-full">
                 <div className={`${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} rounded-lg shadow-lg overflow-hidden mt-2 border`}>
-                  <div className="flex p-2 justify-between items-center border-b border-gray-200 dark:border-gray-700 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-gray-800 dark:to-gray-750">
-                    <div className="flex space-x-2">
+                  <div className="flex p-1.5 justify-between items-center border-b border-gray-200 dark:border-gray-700 bg-gradient-to-r from-blue-50 to-white dark:from-gray-800 dark:to-gray-700">
+                    <div className="flex space-x-1">
                       {(['input', 'code', 'latex', 'mathjax'] as const).map((tab) => (
                         <button
                           key={tab}
                           onClick={() => setActiveTab(tab)}
-                          className={`px-4 py-1.5 capitalize text-sm font-medium rounded-full transition-colors ${
+                          className={`px-3 py-1 capitalize text-sm font-medium rounded-full transition-colors ${
                             activeTab === tab
                               ? isDark
                                 ? 'bg-blue-600 text-white'
