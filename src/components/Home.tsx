@@ -124,7 +124,7 @@ const Home: React.FC<HomeProps> = ({ isDark, onCreateNew }) => {
           </p>
           <button
             onClick={onCreateNew}
-            className="flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-blue-600 via-indigo-500 to-purple-600 text-white rounded-lg hover:from-blue-700 hover:via-indigo-600 hover:to-purple-700 transition-all shadow-md hover:shadow-lg text-lg mx-auto font-medium"
+            className="flex items-center gap-2 px-8 py-2 bg-gradient-to-r from-blue-600 via-indigo-500 to-purple-600 text-white rounded-lg hover:from-blue-700 hover:via-indigo-600 hover:to-purple-700 transition-all shadow-md hover:shadow-lg text-lg mx-auto font-medium"
           >
             <Plus size={24} />
             Create New
@@ -154,7 +154,7 @@ const Home: React.FC<HomeProps> = ({ isDark, onCreateNew }) => {
                 {/* Improved Glow effect - More subtle and faster */}
                 {hoverPosition.isHovering && hoverPosition.elementId === knot.id && (
                   <div 
-                    className="absolute rounded-full pointer-events-none filter blur-2xl opacity-15 bg-gradient-to-r from-blue-500 via-purple-400 to-blue-400 transition-all duration-150 ease-out"
+                    className="absolute rounded-full pointer-events-none filter blur-2xl opacity-15 bg-gradient-to-r from-blue-500 via-purple-400 to-blue-400 transition-all ease-out"
                     style={{
                       width: '300px',
                       height: '300px',
