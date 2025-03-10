@@ -155,7 +155,7 @@ function App() {
             <div className="flex">
               <div className="flex flex-col w-full">
                 <div className={`${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} rounded-lg shadow-lg overflow-hidden mt-2 border`}>
-                  <div className={`flex p-1.5 justify-between items-center border-b border-gray-200 dark:border-gray-700 bg-gradient-to-r ${isDark ? 'to-gray-800 from-blue-200' : 'from-blue-300 to-blue-100'}`}>
+                  <div className={`flex p-1.5 justify-between items-center border-b border-gray-300 dark:border-gray-700 bg-gradient-to-r ${isDark ? 'to-gray-900 from-gray-800' : 'from-blue-100 to-blue-200'}`}>
                     <div className="flex space-x-1">
                       {(['input', 'code', 'latex', 'mathjax'] as const).map((tab) => (
                         <button

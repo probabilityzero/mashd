@@ -71,9 +71,9 @@ const Home: React.FC<HomeProps> = ({ isDark, onCreateNew }) => {
     <div className="space-y-10 max-w-6xl mx-auto">
       <div 
         className={`relative ${
-          isDark ? 'bg-gradient-to-br from-gray-800 to-gray-900' : 'bg-gradient-to-br from-white to-blue-50'
+          isDark ? 'bg-gradient-to-br from-gray-900 to-gray-950' : 'bg-gradient-to-br from-white to-blue-50'
         } rounded-xl shadow-xl p-8 py-14 text-center border ${
-          isDark ? 'border-gray-700' : 'border-blue-100'
+          isDark ? 'border-gray-800' : 'border-blue-100'
         }`} 
         style={{ 
           marginTop: '2rem',
@@ -88,20 +88,20 @@ const Home: React.FC<HomeProps> = ({ isDark, onCreateNew }) => {
         onMouseMove={handleHeroMouseMove}
         onMouseLeave={handleHeroMouseLeave}
       >
-        {/* Improved Glow Effect for Hero */}
+        {/* Base Glow Effect for Hero - More subtle */}
         <div 
-          className="absolute inset-0 pointer-events-none z-[-1] filter blur-2xl opacity-40 bg-gradient-to-r from-blue-400 via-purple-300 to-blue-300 transition-opacity duration-500"
+          className="absolute inset-0 pointer-events-none z-[-1] filter blur-3xl opacity-20 bg-gradient-to-r from-blue-500 via-purple-400 to-blue-400 transition-opacity duration-300"
         />
         
-        {/* Mouse follow glow effect */}
+        {/* Mouse follow glow effect - More subtle and faster */}
         {heroHover.isHovering && (
           <div 
-            className="absolute pointer-events-none filter blur-2xl opacity-30 bg-gradient-to-r from-blue-400 via-lavender-400 to-purple-300 rounded-full transition-all duration-300 ease-out"
+            className="absolute pointer-events-none filter blur-3xl opacity-20 bg-gradient-to-r from-blue-500 via-lavender-500 to-purple-400 rounded-full transition-all duration-150 ease-out"
             style={{
-              width: '250px',
-              height: '250px',
-              left: heroHover.x - 125,
-              top: heroHover.y - 125,
+              width: '280px',
+              height: '280px',
+              left: heroHover.x - 140,
+              top: heroHover.y - 140,
               zIndex: 0
             }}
           />
@@ -111,7 +111,7 @@ const Home: React.FC<HomeProps> = ({ isDark, onCreateNew }) => {
         <div className="max-w-3xl mx-auto relative z-10">
           <div className="mb-3">
             <span className={`inline-block px-3 py-1 text-sm rounded-full ${
-              isDark ? 'bg-blue-900 text-blue-200' : 'bg-blue-100 text-blue-800'
+              isDark ? 'bg-blue-950 text-blue-300' : 'bg-blue-100 text-blue-800'
             }`}>
               Mathematical Visualization Tool
             </span>
@@ -144,22 +144,22 @@ const Home: React.FC<HomeProps> = ({ isDark, onCreateNew }) => {
                 key={knot.id}
                 className={`${
                   isDark
-                    ? 'bg-gray-900 hover:bg-gray-900 border-gray-700'
+                    ? 'bg-gray-900 hover:bg-gray-800 border-gray-800'
                     : 'bg-white hover:bg-blue-50 border-gray-200'
-                } rounded-xl shadow-md transition-all duration-300 overflow-hidden border hover:shadow-lg group cursor-pointer relative`}
+                } rounded-xl shadow-md transition-all duration-200 overflow-hidden border hover:shadow-lg group cursor-pointer relative`}
                 onClick={() => selectKnot(knot.id)}
                 onMouseMove={(e) => handleMouseMove(e, knot.id)}
                 onMouseLeave={handleMouseLeave}
               >
-                {/* Improved Glow effect */}
+                {/* Improved Glow effect - More subtle and faster */}
                 {hoverPosition.isHovering && hoverPosition.elementId === knot.id && (
                   <div 
-                    className="absolute rounded-full pointer-events-none filter blur-xl opacity-40 bg-gradient-to-r from-blue-400 via-purple-300 to-blue-300 transition-all duration-300 ease-out"
+                    className="absolute rounded-full pointer-events-none filter blur-2xl opacity-15 bg-gradient-to-r from-blue-500 via-purple-400 to-blue-400 transition-all duration-150 ease-out"
                     style={{
-                      width: '250px',
-                      height: '250px',
-                      left: hoverPosition.x - 125,
-                      top: hoverPosition.y - 125,
+                      width: '300px',
+                      height: '300px',
+                      left: hoverPosition.x - 150,
+                      top: hoverPosition.y - 150,
                       zIndex: 1
                     }}
                   />
