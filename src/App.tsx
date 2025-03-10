@@ -105,34 +105,33 @@ function App() {
             >
               {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
-            <h1 className="text-xl font-bold" style={{ fontFamily: 'serif' }}>Mash D</h1>
+            <h1 className="text-xl font-bold">Mash D</h1>
           </div>
           {currentKnot && (
             <div className="absolute left-1/2 transform -translate-x-1/2 flex items-center">
               <button
                 onClick={() => setShowEditModal(true)}
-                className={`text-base font-medium ${isDark ? 'text-gray-200 hover:text-white' : 'text-gray-700 hover:text-gray-900'} flex items-center gap-1.5`}
+                className={`text-base font-semibold ${isDark ? 'text-gray-200 hover:text-white' : 'text-gray-700 hover:text-gray-900'} flex items-center gap-1`}
                 style={{ fontFamily: 'serif' }}
               >
                 {currentKnot.name}
-                <Pencil size={14} className="ml-1" />
+                <Pencil size={10} className="pl-1" />
               </button>
             </div>
           )}
           <div className="flex items-center gap-2">
             <button
-              onClick={handleCreateNew}
-              className={`p-2 ${isDark ? 'hover:bg-gray-700 bg-gray-700' : 'hover:bg-gray-100 bg-blue-50'} rounded-full transition-colors flex items-center justify-center`}
-              title="Create New"
-            >
-              <Plus size={18} />
-            </button>
-            <button
               onClick={toggleTheme}
               className={`p-2 ${isDark ? 'hover:bg-gray-700' : 'hover:bg-gray-100'} rounded-full transition-colors`}
+              title="Toggle theme"
             >
               {isDark ? <Sun size={18} /> : <Moon size={18} />}
             </button>
+            <button
+              onClick={handleCreateNew}
+              className={`flex items-center p-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl hover:from-blue-700 hover:to-indigo-700 transition-all shadow-md hover:shadow-lg text-lg mx-auto font-medium`}>
+            <Plus size={18} />
+            <span>New</span>
           </div>
         </div>
       </header>
@@ -225,7 +224,7 @@ function App() {
                     Mathematical Visualization Tool
                   </span>
                 </div>
-                <h2 className={`text-4xl font-bold mb-6 ${isDark ? 'text-white' : 'text-gray-900'}`} style={{ fontFamily: 'serif' }}>
+                <h2 className={`text-4xl font-bold mb-5 ${isDark ? 'text-white' : 'text-gray-900'}`}>
                   Create Your Mathematical Visualization
                 </h2>
                 <p className={`text-xl mb-8 ${isDark ? 'text-gray-300' : 'text-gray-600'} max-w-2xl mx-auto`}>
@@ -242,7 +241,7 @@ function App() {
             </div>
 
             <div className="mt-12">
-              <h3 className={`text-2xl font-bold mb-4 ${isDark ? 'text-white' : 'text-gray-900'} text-center`} style={{ fontFamily: 'serif' }}>
+              <h3 className={`text-2xl font-bold mb-4 ${isDark ? 'text-white' : 'text-gray-900'} text-center`}>
                 Your Visualizations
               </h3>
               
@@ -259,19 +258,19 @@ function App() {
                       onClick={() => selectKnot(knot.id)}
                     >
                       {/* Real Visualization Instead of Thumbnail */}
-                      <div className="h-32 w-full overflow-hidden relative">
+                      <div className="h-36 w-full overflow-hidden relative">
                         {renderVisualization(knot.code)}
                       </div>
                       
                       <div className="p-3">
-                        <h3 className={`text-lg font-semibold mb-1 group-hover:text-blue-500 transition-colors ${isDark ? 'text-white' : 'text-gray-800'}`} style={{ fontFamily: 'serif' }}>
+                        <h3 className={`text-xl font-medium mb-1 group-hover:text-blue-500 transition-colors ${isDark ? 'text-white' : 'text-gray-800'}`} style={{ fontFamily: 'serif' }}>
                           {knot.name}
                         </h3>
                         <p className={`${isDark ? 'text-gray-300' : 'text-gray-600'} text-sm`}>
                           {knot.description}
                         </p>
-                        <div className="flex justify-end items-center pt-1 mt-1">
-                          <span className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'} italic`}>
+                        <div className="flex justify-end items-center">
+                          <span className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
                             {formatRelativeTime(knot.lastModified)}
                           </span>
                         </div>
