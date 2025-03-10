@@ -63,7 +63,7 @@ export const SideMenu: React.FC<SideMenuProps> = ({ onCreateNew, onCloseMenu }) 
         } z-50 flex flex-col`}
       >
         <div className="p-3 flex flex-col h-full">
-          <div className="flex justify-between items-center ml-2 mb-4">
+          <div className="flex justify-between items-center ml-2 mt-2 mb-4">
             <h2 className={`text-xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
               Library
             </h2>
