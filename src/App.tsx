@@ -129,7 +129,7 @@ function App() {
             </button>
             <button
               onClick={handleCreateNew}
-              className="flex items-center gap-2 py-1 px-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl hover:from-blue-700 hover:to-indigo-700 transition-all shadow-md hover:shadow-lg text-base font-normal"
+              className="flex items-center gap-1 py-1.5 px-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg hover:from-blue-700 hover:to-indigo-700 transition-all shadow-md hover:shadow-lg text-base font-medium"
             >
               <Plus size={18} />
               <span>Create</span>
