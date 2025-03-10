@@ -96,7 +96,7 @@ const Home: React.FC<HomeProps> = ({ isDark, onCreateNew }) => {
         {/* Mouse follow glow effect - More subtle and faster */}
         {heroHover.isHovering && (
           <div 
-            className="absolute pointer-events-none filter blur-3xl opacity-20 bg-gradient-to-r from-blue-500 via-lavender-500 to-purple-400 rounded-full transition-all duration-150 ease-out"
+            className="absolute pointer-events-none filter blur-3xl opacity-20 bg-gradient-to-r from-blue-500 via-lavender-500 to-purple-400 rounded-full transition-all"
             style={{
               width: '280px',
               height: '280px',
@@ -154,7 +154,7 @@ const Home: React.FC<HomeProps> = ({ isDark, onCreateNew }) => {
                 {/* Improved Glow effect - More subtle and faster */}
                 {hoverPosition.isHovering && hoverPosition.elementId === knot.id && (
                   <div 
-                    className="absolute rounded-full pointer-events-none filter blur-2xl opacity-15 bg-gradient-to-r from-blue-500 via-purple-400 to-blue-400 transition-all ease-out"
+                    className="absolute rounded-full pointer-events-none filter blur-2xl opacity-15 bg-gradient-to-r from-blue-500 via-purple-400 to-blue-400 transition-all"
                     style={{
                       width: '300px',
                       height: '300px',
