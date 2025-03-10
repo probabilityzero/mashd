@@ -241,6 +241,15 @@ function App() {
                 </button>
               </div>
             </div>
+
+            <div className="mt-12">
+              <h3 className={`text-2xl font-bold mb-4 ${isDark ? 'text-white' : 'text-gray-900'} text-center`}>
+                Your Visualizations
+              </h3>
+              
+              {knots.length > 0 ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {knots.map((knot) => (
 <div
   key={knot.id}
   className={`${
@@ -275,9 +284,16 @@ function App() {
         </span>
       </div>
     </div>
-  </div>
-</div>
-
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className={`text-center p-8 rounded-lg ${isDark ? 'bg-gray-800 text-gray-300' : 'bg-gray-100 text-gray-600'}`}>
+                  <p>You haven't created any visualizations yet. Click "Create New" to begin.</p>
+                </div>
+              )}
+            </div>
           </div>
         )}
       </main>
