@@ -166,7 +166,7 @@ export const SideMenu: React.FC<SideMenuProps> = ({ onCreateNew, onCloseMenu }) 
             ))}
           </div>
         </div>
-        <div className="p-4">
+        {/* <div className="p-4">
           <button
             onClick={toggleTheme}
             className={`absolute bottom-4 right-4 p-2 ${
@@ -175,7 +175,7 @@ export const SideMenu: React.FC<SideMenuProps> = ({ onCreateNew, onCloseMenu }) 
           >
             {isDark ? <Sun size={20} /> : <Moon size={20} />}
           </button>
-        </div>
+        </div> */}
       </div>
 
       {editingKnot && (

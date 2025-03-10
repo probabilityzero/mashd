@@ -27,7 +27,7 @@ function App() {
     const newKnot = {
       id: `math-${Date.now()}`,
       name: 'My Visualization',
-      description: 'My mathematical visualization',
+      description: 'Custom mathematical visualization',
       lastModified: Date.now(),
       code: `function generatePoints(t) {
   const x = Math.sin(t);
@@ -61,11 +61,75 @@ function App() {
     }
   };
 
-
   useEffect(() => {
     setEditingKnot(selectedKnotData);
   }, [selectedKnotData]);
 
+  // Function to format the lastModified date to relative time
+  const formatRelativeTime = (timestamp: number) => {
+    const now = Date.now();
+    const diff = now - timestamp;
+    
+    // Less than 24 hours
+    if (diff < 24 * 60 * 60 * 1000) {
+      return "Today";
+    } 
+    // Less than 48 hours
+    else if (diff < 48 * 60 * 60 * 1000) {
+      return "Yesterday";
+    } 
+    // Otherwise show days ago
+    else {
+      const days = Math.floor(diff / (24 * 60 * 60 * 1000));
+      return `${days} day${days > 1 ? 's' : ''} ago`;
+    }
+  };
+
+  // Function to generate a thumbnail preview based on the code
+  const generateThumbnail = (code: string) => {
+    // This is a simplified version - we'd use the actual visualization logic
+    // For now, it creates a simple SVG pattern based on the code hash
+    const hash = code.split('').reduce((a, b) => {
+      a = ((a << 5) - a) + b.charCodeAt(0);
+      return a & a;
+    }, 0);
+    
+    const colors = [
+      '#3B82F6', '#60A5FA', '#93C5FD', // blues
+      '#8B5CF6', '#A78BFA', '#C4B5FD', // purples
+      '#EC4899', '#F472B6', '#FBCFE8'  // pinks
+    ];
+    
+    const bg = colors[Math.abs(hash) % colors.length];
+    const pattern = Math.abs(hash) % 4; // 0-3 different patterns
+    
+    return (
+      <svg width="100%" height="100%" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <rect width="100" height="100" fill={bg} opacity="0.7" />
+        {pattern === 0 && (
+          <>
+            <circle cx="50" cy="50" r="30" fill="white" opacity="0.2" />
+            <circle cx="50" cy="50" r="20" fill="white" opacity="0.3" />
+          </>
+        )}
+        {pattern === 1 && (
+          <>
+            <line x1="0" y1="0" x2="100" y2="100" stroke="white" strokeWidth="5" opacity="0.3" />
+            <line x1="100" y1="0" x2="0" y2="100" stroke="white" strokeWidth="5" opacity="0.3" />
+          </>
+        )}
+        {pattern === 2 && (
+          <path d="M10,30 Q50,10 90,30 T90,70 Q50,90 10,70 T10,30" fill="none" stroke="white" strokeWidth="3" opacity="0.4" />
+        )}
+        {pattern === 3 && (
+          <>
+            <rect x="20" y="20" width="60" height="60" stroke="white" strokeWidth="3" fill="none" opacity="0.3" />
+            <rect x="35" y="35" width="30" height="30" stroke="white" strokeWidth="2" fill="white" opacity="0.2" />
+          </>
+        )}
+      </svg>
+    );
+  };
 
   return (
     <div className={`min-h-screen ${isDark ? 'dark bg-gray-900' : 'bg-gray-50'}`}>
@@ -206,12 +270,12 @@ function App() {
             </div>
 
             <div className="mt-12">
-              <h3 className={`text-2xl font-bold mb-6 ${isDark ? 'text-white' : 'text-gray-900'} text-center`}>
+              <h3 className={`text-2xl font-bold mb-4 ${isDark ? 'text-white' : 'text-gray-900'} text-center`}>
                 Your Visualizations
               </h3>
               
               {knots.length > 0 ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   {knots.map((knot) => (
                     <div 
                       key={knot.id}
@@ -222,27 +286,31 @@ function App() {
                       } rounded-xl shadow-md transition-all duration-200 overflow-hidden border hover:shadow-lg group cursor-pointer`}
                       onClick={() => selectKnot(knot.id)}
                     >
-                      <div className={`h-3 w-full ${isDark ? 'bg-blue-600' : 'bg-blue-500'}`}></div>
-                      <div className="p-6">
-                        <h3 className={`text-xl font-semibold mb-3 group-hover:text-blue-500 transition-colors ${isDark ? 'text-white' : 'text-gray-800'}`}>
+                      {/* Visualization Thumbnail */}
+                      <div className="h-32 w-full overflow-hidden relative">
+                        {generateThumbnail(knot.code)}
+                      </div>
+                      
+                      <div className="p-4">
+                        <h3 className={`text-lg font-semibold mb-2 group-hover:text-blue-500 transition-colors ${isDark ? 'text-white' : 'text-gray-800'}`}>
                           {knot.name}
                         </h3>
-                        <p className={`${isDark ? 'text-gray-300' : 'text-gray-600'} mb-4`}>
+                        <p className={`${isDark ? 'text-gray-300' : 'text-gray-600'} text-sm mb-3`}>
                           {knot.description}
                         </p>
-                        <div className="flex justify-between items-center pt-2 border-t border-dashed border-gray-200 dark:border-gray-700 mt-2">
+                        <div className="flex justify-between items-center pt-1 border-t border-dashed border-gray-200 dark:border-gray-700 mt-1">
                           <span className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
-                            Last modified: {new Date(knot.lastModified).toLocaleDateString()}
+                            {formatRelativeTime(knot.lastModified)}
                           </span>
                           <button 
-                            className={`p-1.5 rounded-full ${isDark ? 'hover:bg-gray-700' : 'hover:bg-gray-100'}`}
+                            className={`p-1 rounded-full ${isDark ? 'hover:bg-gray-700' : 'hover:bg-gray-100'}`}
                             onClick={(e) => {
                               e.stopPropagation();
                               setEditingKnot(knot);
                               setShowEditModal(true);
                             }}
                           >
-                            <Edit size={16} className={isDark ? 'text-gray-400' : 'text-gray-500'} />
+                            <Edit size={14} className={isDark ? 'text-gray-400' : 'text-gray-500'} />
                           </button>
                         </div>
                       </div>
