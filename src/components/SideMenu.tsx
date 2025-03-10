@@ -63,7 +63,7 @@ export const SideMenu: React.FC<SideMenuProps> = ({ onCreateNew, onCloseMenu }) 
         } z-50 flex flex-col`}
       >
         <div className="p-3 flex flex-col h-full">
-          <div className="flex justify-between items-center ml-2 mt-2 mb-4">
+          <div className="flex justify-between items-center ml-2 mt-1 mb-5">
             <h2 className={`text-xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
               Library
             </h2>
@@ -71,7 +71,7 @@ export const SideMenu: React.FC<SideMenuProps> = ({ onCreateNew, onCloseMenu }) 
 
           <button
             onClick={onCreateNew}
-            className={`flex items-center font-medium justify-center gap-2 px-4 py-2 rounded-lg transition-colors mb-6 ${
+            className={`flex items-center font-medium justify-center gap-2 px-4 py-2 rounded-lg transition-colors mb-6 bg-gradient-to-r from-blue-600 via-indigo-500 to-purple-600 text-white rounded-lg hover:from-blue-700 hover:via-indigo-600 hover:to-purple-700 transition-all duration-300 ease-in-out shadow-md hover:shadow-lg text-lg mx-auto font-medium ${
               isDark 
                 ? 'bg-blue-600 hover:bg-blue-700 text-white' 
                 : 'bg-blue-500 hover:bg-blue-600 text-white'
