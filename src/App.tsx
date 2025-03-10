@@ -145,7 +145,7 @@ function App() {
       {isMenuOpen && <div className="fixed inset-0 bg-black bg-opacity-50 z-40" onClick={handleClickOutside} />}
       <SideMenu onCreateNew={handleCreateNew} onCloseMenu={toggleMenu} />
 
-      <main className="container mx-auto px-4 md:px-6 py-6">
+      <main className="container mx-auto px-3 md:px-6 py-3 md:py-6">
         {currentKnot ? (
           <div className="space-y-6">
             <div className={`${isDark ? 'bg-gray-800' : 'bg-white'} rounded-lg shadow-lg overflow-hidden`} style={{ height: '600px' }}>
@@ -155,7 +155,7 @@ function App() {
             <div className="flex">
               <div className="flex flex-col w-full">
                 <div className={`${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} rounded-lg shadow-lg overflow-hidden mt-2 border`}>
-                  <div className={`flex p-1.5 justify-between items-center border-b border-gray-200 dark:border-gray-700 bg-gradient-to-r ${isDark ? 'to-gray-800 from-gray-700' : 'from-blue-300 to-blue-500'}`}>
+                  <div className={`flex p-1.5 justify-between items-center border-b border-gray-200 dark:border-gray-700 bg-gradient-to-r ${isDark ? 'to-gray-800 from-blue-200' : 'from-blue-300 to-blue-100'}`}>
                     <div className="flex space-x-1">
                       {(['input', 'code', 'latex', 'mathjax'] as const).map((tab) => (
                         <button
@@ -167,7 +167,7 @@ function App() {
                                 ? 'bg-blue-600 text-white'
                                 : 'bg-blue-700 text-white'
                               : isDark
-                              ? 'text-gray-300 hover:bg-gray-700 hover:text-white'
+                              ? 'text-gray-300 hover:bg-gray-600 hover:text-white'
                               : 'text-blue-900 hover:bg-blue-200 hover:text-blue-900'
                           }`}
                         >
