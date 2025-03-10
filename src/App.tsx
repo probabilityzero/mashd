@@ -202,7 +202,7 @@ function App() {
             </div>
           </div>
         ) : (
-          <div className="space-y-12 max-w-6xl mx-auto">
+          <div className="space-y-10 max-w-6xl mx-auto">
             <div 
               className={`${
                 isDark ? 'bg-gradient-to-br from-gray-800 to-gray-900' : 'bg-gradient-to-br from-white to-blue-50'
