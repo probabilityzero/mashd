@@ -24,7 +24,7 @@ const defaultKnots: KnotDefinition[] = [
   {
     id: 'trefoil',
     name: 'Trefoil Knot',
-    description: 'The simplest non-trivial 3D knot, defined by a smooth parametric curve.',
+    description: 'The non-trivial knot, defined by a smooth parametric curve.',
     lastModified: Date.now(),
     code: `function generatePoints(t) {
   // Trefoil Knot parametric equations
@@ -37,7 +37,7 @@ const defaultKnots: KnotDefinition[] = [
   {
     id: 'figureEight',
     name: 'Figure-Eight Knot',
-    description: 'A popular 3D knot with a self-intersecting pattern in its projection.',
+    description: 'A knot with a self-intersecting pattern in its projection.',
     lastModified: Date.now(),
     code: `function generatePoints(t) {
   // Figure-Eight Knot parametric equations
@@ -50,7 +50,7 @@ const defaultKnots: KnotDefinition[] = [
   {
     id: 'lemniscate',
     name: 'Lemniscate of Bernoulli',
-    description: 'A classic 2D figure-eight curve. (z is set to 0)',
+    description: 'A figure-eight curve. (z is set to 0)',
     lastModified: Date.now(),
     code: `function generatePoints(t) {
   // Lemniscate parametric equations in 2D, with z fixed to 0.
@@ -82,8 +82,8 @@ const defaultKnots: KnotDefinition[] = [
   },
   {
     id: 'sineCurve2D',
-    name: '2D Sine Wave',
-    description: 'A simple 2D sine wave plotted as a curve. (z is set to 0)',
+    name: 'Sine Wave',
+    description: 'A sine wave plotted as a curve. (z is set to 0)',
     lastModified: Date.now(),
     code: `function generatePoints(t) {
   // t ranges from 0 to 2π, mapping to x.
